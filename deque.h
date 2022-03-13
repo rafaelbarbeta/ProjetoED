@@ -2,7 +2,6 @@
 
 #define DEQUE_H
 #include "deque.c"
-#include <stdlib.h>
 
 typedef int type;
 typedef struct {
