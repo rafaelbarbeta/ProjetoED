@@ -1,9 +1,7 @@
 #ifndef DEQUE_H
-
 #define DEQUE_H
-#include "deque.c"
-
 typedef int type;
+
 typedef struct {
     unsigned int head;
     unsigned int tail;
@@ -13,7 +11,7 @@ typedef struct {
 void inicializa (type *deque, unsigned int tam);
 int vazio (type *deque);
 int cheio (type *deque);
-void proximo (type *deque, unsigned int *index);
+void proximo (type *deque, unsigned int *index,unsigned int modo);
 int adicionaInicio (type *deque, type num);
 int adicionaFinal (type *deque, type num);
 int removeInicio (type *deque);
