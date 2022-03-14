@@ -5,8 +5,8 @@
 
 typedef int type;
 typedef struct {
-    struct node *sentinela;
-    unsigned int quantidade;
+    struct node *sentinel;
+    unsigned int qty;
 } listaEnc;
 
 struct node {
@@ -14,15 +14,15 @@ struct node {
     type data;
 };
 
-void inicializa (listaEnc *pont);
-int vazia (listaEnc *pont);
-void inserirInicio (listaEnc *pont, type num);
-void inserirFinal (listaEnc *pont, type num);
-void removeInicio (listaEnc *pont);
-void removeFinal (listaEnc *pont);
-unsigned int tamanho (listaEnc *pont);
-type vizualizarInicio (listaEnc *pont);
-type vizualizarFinal (listaEnc *pont);
-void destroi (listaEnc *pont);
+void startList (listaEnc *pont); //inicia
+int emptyList (listaEnc *pont); //vazio
+void addStartList (listaEnc *pont, type num); //inseri (inicio)
+void addEndList (listaEnc *pont, type num); //inseri (final)
+void removeStartList (listaEnc *pont); //remove (inicio)
+void removeEndList (listaEnc *pont); //remove (final)
+unsigned int sizeList (listaEnc *pont); //tamanho
+type viewStartList (listaEnc *pont); //visualizar (inicio)
+type viewEndList (listaEnc *pont); //visualizar (final)
+void wreckList (listaEnc *pont); //destroi
 
 #endif 

@@ -7,19 +7,19 @@ typedef int type;
 typedef struct {
     unsigned int head;
     unsigned int tail;
-    type *vet;
+    type *vect;
 } deque;
 
-void inicializa (deque *d, unsigned int tam);
-int vazio (deque *d);
-int cheio (deque *d);
-void proximo (deque *d, unsigned int *index);
-int adicionaInicio (deque *d, type num);
-int adicionaFinal (deque *d, type num);
-int removeInicio (deque *d);
-int removeFinal (deque *d);
-type visualizarInicio (deque *d);
-type visualizarFinal (deque *d);
-void destroi (deque *d);
+void startDeque (deque *d, unsigned int size); //inicia
+int emptyDeque (deque *d); //vazio
+int fullDeque (deque *d); //cheio
+void nextDeque (deque *d, unsigned int *index); //proximo
+int addStartDeque (deque *d, type num); //inseri (inicio)
+int addEndDeque (deque *d, type num); //inseri (final)
+int removeStartDeque (deque *d); //remove (inicio)
+int removeEndDeque (deque *d); //remove (final)
+type viewStartDeque (deque *d); //visualizar (inicio)
+type viewEndDeque (deque *d);  //visualizar (final)
+void wreckDeque (deque *d); //destroi
 
 #endif
