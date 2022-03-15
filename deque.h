@@ -1,23 +1,26 @@
 #ifndef DEQUE_H
-#define DEQUE_H
-typedef int type;
 
+#define DEQUE_H
+#include "deque.c"
+
+typedef int type;
 typedef struct {
     unsigned int head;
     unsigned int tail;
-    type *vet;
+    type *vect;
 } deque;
 
-void inicializa (type *deque, unsigned int tam);
-int vazio (type *deque);
-int cheio (type *deque);
-void proximo (type *deque, unsigned int *index,unsigned int modo);
-int adicionaInicio (type *deque, type num);
-int adicionaFinal (type *deque, type num);
-int removeInicio (type *deque);
-int removeFinal (type *deque);
-type visualizarInicio (type *deque);
-type visualizarFinal (type *deque);
-void destroi (type *deque);
+void startDeque (deque *d, unsigned int size); //inicia
+int emptyDeque (deque *d); //vazio
+int fullDeque (deque *d); //cheio
+void nextDeque (deque *d, unsigned int *index); //proximo
+int addStartDeque (deque *d, type num); //inseri (inicio)
+int addEndDeque (deque *d, type num); //inseri (final)
+int removeStartDeque (deque *d); //remove (inicio)
+int removeEndDeque (deque *d); //remove (final)
+type viewStartDeque (deque *d); //visualizar (inicio)
+type viewEndDeque (deque *d);  //visualizar (final)
+void wreckDeque (deque *d); //destroi
 
 #endif
+
