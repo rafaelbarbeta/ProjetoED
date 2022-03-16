@@ -13,7 +13,7 @@ typedef struct {
 void startDeque (deque *d, unsigned int size); //inicia
 int emptyDeque (deque *d); //vazio
 int fullDeque (deque *d); //cheio
-void nextDeque (deque *d, unsigned int *index,unsigned mode); //proximo
+void nextDeque (deque *d, unsigned int *index, int mode); //proximo
 int addStartDeque (deque *d, type num); //inseri (inicio)
 int addEndDeque (deque *d, type num); //inseri (final)
 int removeStartDeque (deque *d); //remove (inicio)
