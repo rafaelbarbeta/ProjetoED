@@ -9,20 +9,20 @@ void startDeque (deque *d, unsigned int size) {
 }
 void nextDeque (deque *d, unsigned int *index, int mode) {
     //vai para a proxima posicao normalmente
-    if (index > 0 && index != (d->imax)) 
+    if (*index > 0 && *index != (d->imax)) 
         index = index + mode; //incrementa ou decrementa 1 dependendo do mode
 
     //se ocorre decremento da posicao 0     
-    if (index == 0  && mode == -1) 
-        index = (d->imax); //index passa a ser o ultimo
+    if (*index == 0  && mode == -1) 
+        *index = (d->imax); //index passa a ser o ultimo
     else    
-        (index)++; //se nao, ocorre incremento normalmente
+        (*index)++; //se nao, ocorre incremento normalmente
 
     //se ocorre incremento na utima posicao
-    if (index == (d->imax) && mode == 1)
-        index = 0; //index retorna ao inicio 0
+    if (*index == (d->imax) && mode == 1)
+        *index = 0; //index retorna ao inicio 0
     else 
-        (index)--; //se nao, ocorre decremento normalmente
+        (*index)--; //se nao, ocorre decremento normalmente
 }
 
 int addStartDeque (deque *d, type num) {
