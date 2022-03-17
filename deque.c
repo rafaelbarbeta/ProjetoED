@@ -4,25 +4,28 @@
 void startDeque (deque *d, unsigned int size) {
     d->head = 0; //indices iniciados em 0
     d->tail = 0;
-    d->imax = size-1;
-    d->vect = (type*) malloc (size * sizeof(type));
+    d->imax = size; 
+    d->vect = (type*) malloc ((size+1)* sizeof(type)); //aloca uma posicao extra para ajudar nas operacoes do deque (empty e full)
 }
 void nextDeque (deque *d, unsigned int *index, int mode) {
-    //vai para a proxima posicao normalmente
-    if (*index > 0 && *index != (d->imax)) 
-        index = index + mode; //incrementa ou decrementa 1 dependendo do mode
-
-    //se ocorre decremento da posicao 0     
-    if (*index == 0  && mode == -1) 
-        *index = (d->imax); //index passa a ser o ultimo
-    else    
-        (*index)++; //se nao, ocorre incremento normalmente
-
-    //se ocorre incremento na utima posicao
-    if (*index == (d->imax) && mode == 1)
-        *index = 0; //index retorna ao inicio 0
-    else 
-        (*index)--; //se nao, ocorre decremento normalmente
+    //caso o index nao esteja "nos extremos do vetor" vai para a proxima posicao normalmente
+    if (*index != 0 && *index != (d->imax)) {
+        *index = *index + mode; //incrementa ou decrementa 1 dependendo do mode
+    }
+    // caso esteja no inicio e mode = -1, vai pro final do vetor, se nao, aumenta 1
+    else if (*index == 0) { 
+        if (mode == -1) 
+            *index = d->imax;
+        else
+            (*index)++;
+    }
+    //caso esteja no final e mode = 1, vai para o inicio, se nao, diminui 1
+    else {
+        if (mode == 1)
+            *index = 0;
+        else
+            (*index)--;
+    }
 }
 
 int addStartDeque (deque *d, type num) {
@@ -57,4 +60,8 @@ type viewEndDeque (deque *d) {
 
 void wreckDeque (deque *d) {
     free(d->vect); //libera vetor
+    d->vect = NULL; //o ponteiro passa a apontar para NULL (evita dangling pointer)
+    d->head = 0;
+    d->tail = 0;
+    d->imax = 0;
 }
