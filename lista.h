@@ -1,7 +1,6 @@
 #ifndef LISTA_H
 
 #define LISTA_H
-#include "lista.c"
 
 typedef int type;
 typedef struct {
@@ -14,15 +13,15 @@ struct node {
     type data;
 };
 
-void startList (listaEnc *pont); //inicia
-int emptyList (listaEnc *pont); //vazio
-void addStartList (listaEnc *pont, type num); //inseri (inicio)
-void addEndList (listaEnc *pont, type num); //inseri (final)
-void removeStartList (listaEnc *pont); //remove (inicio)
-void removeEndList (listaEnc *pont); //remove (final)
-unsigned int sizeList (listaEnc *pont); //tamanho
-type viewStartList (listaEnc *pont); //visualizar (inicio)
-type viewEndList (listaEnc *pont); //visualizar (final)
-void wreckList (listaEnc *pont); //destroi
+void startList (listaEnc *l); //inicia
+int emptyList (listaEnc *l); //vazio
+void addStartList (listaEnc *l, type num); //inseri (inicio)
+void addEndList (listaEnc *l, type num); //inseri (final)
+void removeStartList (listaEnc *l); //remove (inicio)
+void removeEndList (listaEnc *l); //remove (final)
+unsigned int sizeList (listaEnc *l); //tamanho
+type viewStartList (listaEnc *l); //visualizar (inicio)
+type viewEndList (listaEnc *l); //visualizar (final)
+void wreckList (listaEnc *l); //destroi
 
 #endif 
