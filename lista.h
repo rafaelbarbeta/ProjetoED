@@ -24,4 +24,4 @@ type viewStartList (listaEnc *l); //visualizar (inicio)
 type viewEndList (listaEnc *l); //visualizar (final)
 void wreckList (listaEnc *l); //destroi
 
-#endif 
+#endif
