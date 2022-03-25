@@ -32,6 +32,18 @@ void addEndList (listaEnc *l, type num) {
     l->sentinel->prev = newNode;
 }
 
+type viewStartList (listaEnc *l) {
+    return (l->sentinel->next->data); //retorna data do posterior ao sentinela
+}
+
+type viewEndList (listaEnc *l) {
+    return (l->sentinel->prev->data); //retorna data do anterior ao sentinela 
+}
+
+unsigned int sizeList (listaEnc *l) {
+    return (l->qty); //retorna qtd nodes
+}
+
 void wreckList (listaEnc *l) {
     while (!emptyList(l))
         removeStartList(l);
