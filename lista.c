@@ -51,3 +51,23 @@ void wreckList (listaEnc *l) {
     l->sentinel = NULL;
     l->qty = 0;
 }
+
+void removeEndList (listaEnc *l){
+    struct node *newNode = l->sentinel->prev; //cria uma variavel estatica que recebe sentinel prev
+    if(newNode != l->sentinel){ //verifica se a lista nao esta vazia, pode ser feito chamando a funcao para verificar, nesse caso aprenas comparei o valor do new world com a sentinel dessa forma nao precisa chamar outra funcao
+        newNode->next->prev = newNode->prev;
+        newNode->prev->next = newNode->next;
+        free(newNode); //desaloca
+        l->qty--;
+    }
+}
+
+int emptyList (listaEnc *l){
+    struct node *newNode = l->sentinel->prev; //cria uma variavel estatica que recebe sentinel prev
+    if(newNode==l->sentinel){ //se essa variavel for igual ao sentinel significa que a lista esta vazia
+        return 1; //esta vazia
+    }
+    else{ //caso contrario significa que a lista nao esta vazia
+        return 0;
+    }
+}
