@@ -83,9 +83,9 @@ int testeViolacaoMem() {
     for (i = 0; i < 50000; i++) { //tenta remover mais elementos do que eh possivel, a API deve se proteger disso
         inicio = rand() % 2;
         if (inicio)
-            addStartList(&listaTeste,i);
+            removeStartList(&listaTeste);
         else
-            addEndList(&listaTeste,i);
+            removeEndList(&listaTeste);
     }
     wreckList(&listaTeste);
     return 0;

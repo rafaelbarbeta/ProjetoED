@@ -1,6 +1,7 @@
 #include "lista.h"
 #include <stdlib.h>
 
+/* funções da lista sem iterador*/
 void startList (listaEnc *l) {
     l->qty = 0;
     l->sentinel = (struct node*) malloc(sizeof(struct node)); //constroi o no sentinela
@@ -83,4 +84,43 @@ void wreckList (listaEnc *l) {
     free(l->sentinel);
     l->sentinel = NULL;
     l->qty = 0;
+}
+/* funções da lista com iterador */
+void insertAfterList (listaEnc* l,iterador i, type data) {
+    if (l != i.list) { //o iterador obrigatoriamente precisa ser da mesma lista que a lista apontada nos parâmetros
+        return;         //do contrário, a função não irá executar por segurança
+    }
+    struct node *newNode = malloc(sizeof(struct node));
+    newNode->data = data;
+    newNode->prev = i.position;
+    newNode->next = i.position->next;
+    i.position->next->prev = newNode;
+    i.position->next = newNode;
+}
+
+void insertBeforeList (listaEnc* l,iterador i, type data) {
+    if (l != i.list) { //o iterador obrigatoriamente precisa ser da mesma lista que a lista apontada nos parâmetros
+        return;         //do contrário, a função não irá executar por segurança
+    }
+    struct node *newNode = malloc(sizeof(struct node));
+    newNode->data = data;
+    newNode->prev = i.position->prev;
+    newNode->next = i.position;
+    i.position->prev->next = newNode;
+    i.position->prev = newNode;
+}
+
+iterador searchFirstList(listaEnc* l , type data) {
+    l->sentinel->data = data; //coloca o valor a ser procurado na sentinela
+    iterador searchIt = firstElementList(l); //cria um iterador apontando para o inicio da lista
+    while (getElementList(searchIt) != data) //avança de posição até achar o valor procurado
+        nextElementList(&searchIt);          //a função termina pois em último caso o valor está na própria sentinela
+    return searchIt; //retorna o iterador apontando para o elemento procurado ou um iterador apontanto para o fim se não achar 
+}
+
+iterador searchAfterList(listaEnc* l,iterador i, type data) {
+    l->sentinel->data = data; //coloca o valor a ser procurado na sentinela
+    while (getElementList(i)!= data) //avança searchIt de posição até achar o valor procurado
+        nextElementList(&i);          //a função termina pois em último caso o valor está na própria sentinela
+    return i; //retorna o iterador apontando para o elemento procurado ou um iterador apontando para o fim se não achar
 }
