@@ -37,8 +37,10 @@ void wreckList (listaEnc *l); //destroi
 void insertAfterList (listaEnc* l,iterador i, type data); //insere um elemento depois do elemento apontado pelo iterador
 void insertBeforeList (listaEnc* l,iterador i, type data); //insere um elemento antes do elemento apontado pelo iterador
 int removeElementList (listaEnc* l,iterador *i); //remove um elemento apontado pelo iterador
+
 iterador firstElementList(listaEnc* l); //retorna um iterador apontando para o primeiro elemento da lista
 iterador lastElementList(listaEnc* l);  //retorna um iterador apontando para o ultimo elemento da lista
+
 type getElementList(iterador i); //retorna o valor do elemento guardado na posição apontado pelo iterador
 int nextElementList(iterador* i); //avança uma posição na lista, deve ser passado o endereço do iterador
 int previousElementList(iterador* i); //retorna uma posição na lista, deve ser passado o endereço do iterador

@@ -1,9 +1,9 @@
-#include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include "lista.h"
+#include <check.h>
 
-int testeAdicionarRemover() {
+START_TEST(testeAdicionarInicio) {
     listaEnc listaTeste;
     startList(&listaTeste);
     int i;
@@ -11,63 +11,47 @@ int testeAdicionarRemover() {
         addStartList(&listaTeste,i);
     }
     for (i = 50000; i >= 0; i--) {
-       if (viewStartList(&listaTeste) != i){
-            printf("Erro na função testeAdicionarRemover\n");
-            wreckList(&listaTeste);
-            return 1;
-       }
+        ck_assert_int_eq(viewStartList(&listaTeste), i);
         removeStartList(&listaTeste);
     }
     wreckList(&listaTeste);
-    return 0;
 }
+END_TEST
 
-int testeAdicionarRemoverFim() { //adciona varios elementos no fim
+START_TEST(testeAdicionarFim) { 
     listaEnc listaTeste;
     startList(&listaTeste);
     int i;
-    for (i = 0; i <= 50000; i++) {
+    for (i = 0; i <= 50000; i++) { //adiciona varios elementos no fim
         addEndList(&listaTeste,i);
     }
     for (i = 50000; i >= 0; i--) {
-       if (viewEndList(&listaTeste) != i){
-            printf("Erro na função testeAdicionarRemoverFim\n");
-            wreckList(&listaTeste);
-            return 1;
-       }
+        ck_assert_int_eq(viewEndList(&listaTeste),i);
         removeEndList(&listaTeste);
     }
     wreckList(&listaTeste);
-    return 0;
 }
+END_TEST
 
-int testeMisturadoInicioFim() {
+START_TEST(testeMisturadoInicioFim) {
     listaEnc listaTeste;
     startList(&listaTeste);
     int i;
-    for (i = 0; i <= 50000; i += 2) { //os pares estão no início decrescente
-        addStartList(&listaTeste,i); //os impares estão no fim de forma crescente
-        addEndList(&listaTeste,i+1);
+    for (i = 0; i <= 50000; i += 2) { 
+        addStartList(&listaTeste,i); //os pares estão no início de forma decrescente
+        addEndList(&listaTeste,i+1); //os impares estão no fim de forma crescente
     }
     for (i = 50000; i >= 0; i -= 2) {
-        if (viewStartList(&listaTeste) != i) {
-            printf("Erro na função testeMisturadoInicioFim\n");
-            wreckList(&listaTeste);
-            return 1;
-        }
-        else if (viewEndList(&listaTeste) != i+1) {
-            printf("Erro na função testeMisturadoInicioFim\n");
-            wreckList(&listaTeste);
-            return 1;
-        }
+        ck_assert_int_eq(viewStartList(&listaTeste),i);
+        ck_assert_int_eq(viewEndList(&listaTeste),(i+1));
         removeStartList(&listaTeste); 
         removeEndList(&listaTeste);
     }
     wreckList(&listaTeste);
-    return 0;
 }
+END_TEST
 
-int testeViolacaoMem() {
+START_TEST(testeViolacaoMem) {
     listaEnc listaTeste;
     startList(&listaTeste);
     int inicio;
@@ -88,15 +72,41 @@ int testeViolacaoMem() {
             removeEndList(&listaTeste);
     }
     wreckList(&listaTeste);
-    return 0;
+}
+END_TEST
+
+START_TEST(poucosElementos) {
+    listaEnc listaTeste;
+    startList(&listaTeste);
+    addStartList(&listaTeste,20);
+    removeEndList(&listaTeste);
+    addEndList(&listaTeste,21);
+    addStartList(&listaTeste,80);
+    removeEndList(&listaTeste);
+    ck_assert_int_eq(viewStartList(&listaTeste),80);
+    wreckList(&listaTeste);
+}
+END_TEST
+
+Suite *criar_lista_suite() {
+    Suite *s;
+    TCase *tc_lista;
+    
+    s = suite_create("Teste Lista");
+    tc_lista = tcase_create("Teste Lista TCase");
+    tcase_add_test(tc_lista,testeAdicionarInicio);
+    tcase_add_test(tc_lista,testeAdicionarFim);
+    tcase_add_test(tc_lista,testeMisturadoInicioFim);
+    tcase_add_test(tc_lista,testeViolacaoMem);
+    tcase_add_test(tc_lista,poucosElementos);
+    suite_add_tcase(s,tc_lista);
+    return s;
 }
 
 int main() {
-    int qtdErros = testeAdicionarRemover() + testeAdicionarRemoverFim() + testeMisturadoInicioFim() + testeViolacaoMem();
-    if (!qtdErros)
-        printf("Todas as funções da lista estão funcionando corretamente\n");
-    else
-        printf("Erros encontrados!\n");
-    printf("Erros : %d\n",qtdErros);
+    Suite *s = criar_lista_suite();
+    SRunner *sr = srunner_create(s);
+    srunner_run_all(sr,CK_NORMAL);
+    srunner_free(sr);
     return 0;
 }
