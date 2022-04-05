@@ -65,3 +65,53 @@ void wreckDeque (deque *d) {
     d->tail = 0;
     d->imax = 0;
 }
+
+int emptyDeque (deque *d){
+    if(d->head==d->tail==0){
+        return 1;//esta vazio
+    }
+    else{
+        return 0;
+    }
+}
+
+int fullDeque (deque *d){
+    if ((d->head==0 && d->tail==d->imax) || (d->head==d->tail+1)){
+        return 1;//esta cheio
+    }
+    else{
+        return 0;
+    }
+}
+int removeStartDeque (deque *d){
+    if(!emptyDeque){//verifica se nao esta vazia
+        if(d->head==d->tail){ //caso em que existe apenas 1 elemento
+            d->head=d->tail=0;
+        }
+        else{
+            if(d->head == d->imax-1){
+                d->head=0;
+            }
+            else{
+                d->head++;
+            }
+        }
+    }
+    return 1;
+}
+int removeEndDeque (deque *d){
+    if(!emptyDeque){//verifica se nao esta vazia
+        if(d->head==d->tail){//caso so exista 1 elemento
+            d->head=0;
+            d->tail=0;
+        }
+    }
+    else if(d->tail==0){
+        d->tail=d->imax-1;
+    }
+    else{
+        d->tail--;
+    }
+    return 1;
+
+}
