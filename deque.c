@@ -67,51 +67,29 @@ void wreckDeque (deque *d) {
 }
 
 int emptyDeque (deque *d){
-    if(d->head==d->tail==0){
-        return 1;//esta vazio
-    }
-    else{
-        return 0;
-    }
+    return d->head == d->tail ? 1 : 0; //se head == tail entao o deque esta vazio
 }
 
 int fullDeque (deque *d){
-    if ((d->head==0 && d->tail==d->imax) || (d->head==d->tail+1)){
-        return 1;//esta cheio
-    }
-    else{
+    unsigned int indexTemp = d->tail; //cria um index temporario que recebe o valor de tail
+    //retroce uma posicao do index temporario e verifica se head e tail sao iguais. Se forem, entao o deque esta cheio
+    nextDeque(d,&indexTemp,-1);
+    if (indexTemp == d->head)
+        return 1;
+    else
         return 0;
-    }
 }
 int removeStartDeque (deque *d){
-    if(!emptyDeque){//verifica se nao esta vazia
-        if(d->head==d->tail){ //caso em que existe apenas 1 elemento
-            d->head=d->tail=0;
-        }
-        else{
-            if(d->head == d->imax-1){
-                d->head=0;
-            }
-            else{
-                d->head++;
-            }
-        }
+    if (!emptyDeque(d)) { //para remover um elemento no inicio, basta deslocar head uma posicao para tras circularmente 
+        nextDeque(d,&(d->head),-1);
+        return 1;
     }
-    return 1;
+    return 0;
 }
 int removeEndDeque (deque *d){
-    if(!emptyDeque){//verifica se nao esta vazia
-        if(d->head==d->tail){//caso so exista 1 elemento
-            d->head=0;
-            d->tail=0;
-        }
+    if (!emptyDeque(d)) { //para remover um elemento no inicio, basta deslocar tail uma posicao para frente circularmente
+        nextDeque(d,&(d->tail),1);
+        return 1;
     }
-    else if(d->tail==0){
-        d->tail=d->imax-1;
-    }
-    else{
-        d->tail--;
-    }
-    return 1;
-
+     return 0;
 }
