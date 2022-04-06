@@ -4,7 +4,7 @@
 /* funções da lista sem iterador*/
 void startList (listaEnc *l) {
     l->qty = 0;
-    l->sentinel = (struct node*) malloc(sizeof(struct node)); //constroi o no sentinela
+    l->sentinel = (struct node*) malloc(sizeof(struct node)); //constroi o node sentinela
     l->sentinel->next = l->sentinel; //faz a sentinela apontar para si mesmo no next e prev
     l->sentinel->prev = l->sentinel;
 }
@@ -50,20 +50,20 @@ unsigned int sizeList (listaEnc *l) {
 
 void removeEndList (listaEnc *l){
     struct node *lastNode = l->sentinel->prev; //cria uma variavel estatica que recebe sentinel prev
-    if(!emptyList(l)){ //verifica se a lista nao esta vazia
-        lastNode->next->prev = lastNode->prev;
-        lastNode->prev->next = lastNode->next;
-        free(lastNode); //desaloca
+    if(!emptyList(l)){ //se a lista nao esta vazia
+        lastNode->next->prev = lastNode->prev; //aponta prev do primeiro elemento pro penultimo node
+        lastNode->prev->next = lastNode->next; //atualiza next do penultimo node
+        free(lastNode); //destroi "ultimo node"
         l->qty--;
     }
 }
 
 void removeStartList (listaEnc *l) {
-    struct node *firstNode = l->sentinel->next;
-    if (!emptyList(l)) {
-        firstNode->next->prev = firstNode->prev;
-        firstNode->prev->next = firstNode->next;
-        free(firstNode);
+    struct node *firstNode = l->sentinel->next; //cria variavel estatica para o sentinela next (ultimo node)
+    if (!emptyList(l)) {//se a lista nao esta vazia
+        firstNode->next->prev = firstNode->prev; //aponta next do segundo node para o ultimo
+        firstNode->prev->next = firstNode->next; //aponta next do ultimo node para o segundo
+        free(firstNode); //destroi "primeiro node"
         l->qty--;
     }
 }
@@ -79,16 +79,16 @@ int emptyList (listaEnc *l){
 }
 
 void wreckList (listaEnc *l) {
-    while (!emptyList(l))
+    while (!emptyList(l)) //remove enquanto ainda houver elemento
         removeStartList(l);
     free(l->sentinel);
     l->sentinel = NULL;
     l->qty = 0;
 }
-/* funções da lista com iterador */
+/* funcoes da lista com iterador */
 void insertAfterList (listaEnc* l,iterador i, type data) {
-    if (l != i.list) { //o iterador obrigatoriamente precisa ser da mesma lista que a lista apontada nos parâmetros
-        return;         //do contrário, a função não irá executar por segurança
+    if (l != i.list) { //o iterador obrigatoriamente precisa ser da mesma lista que a lista apontada nos parametros
+        return;         //do contrario, a funcao não ira executar por seguranca
     }
     struct node *newNode = malloc(sizeof(struct node));
     newNode->data = data;
@@ -100,7 +100,7 @@ void insertAfterList (listaEnc* l,iterador i, type data) {
 
 void insertBeforeList (listaEnc* l,iterador i, type data) {
     if (l != i.list) { //o iterador obrigatoriamente precisa ser da mesma lista que a lista apontada nos parâmetros
-        return;         //do contrário, a função não irá executar por segurança
+        return;         //do contrario, a funcao nao ira executar por seguranca
     }
     struct node *newNode = malloc(sizeof(struct node));
     newNode->data = data;
@@ -113,14 +113,14 @@ void insertBeforeList (listaEnc* l,iterador i, type data) {
 iterador searchFirstList(listaEnc* l , type data) {
     l->sentinel->data = data; //coloca o valor a ser procurado na sentinela
     iterador searchIt = firstElementList(l); //cria um iterador apontando para o inicio da lista
-    while (getElementList(searchIt) != data) //avança de posição até achar o valor procurado
-        nextElementList(&searchIt);          //a função termina pois em último caso o valor está na própria sentinela
-    return searchIt; //retorna o iterador apontando para o elemento procurado ou um iterador apontanto para o fim se não achar 
+    while (getElementList(searchIt) != data) //avança de posicao até achar o valor procurado
+        nextElementList(&searchIt);          //a funcao termina pois em ultimo caso o valor está na propria sentinela
+    return searchIt; //retorna o iterador apontando para o elemento procurado ou um iterador apontanto para o fim se nao achar 
 }
 
 iterador searchAfterList(listaEnc* l,iterador i, type data) {
     l->sentinel->data = data; //coloca o valor a ser procurado na sentinela
     while (getElementList(i)!= data) //avança searchIt de posição até achar o valor procurado
-        nextElementList(&i);          //a função termina pois em último caso o valor está na própria sentinela
-    return i; //retorna o iterador apontando para o elemento procurado ou um iterador apontando para o fim se não achar
+        nextElementList(&i);          //a funcao termina pois em ultimo caso o valor esta na propria sentinela
+    return i; //retorna o iterador apontando para o elemento procurado ou um iterador apontando para o fim se nao achar
 }
