@@ -9,7 +9,7 @@ START_TEST(testeAdicionarInicioLista) {
     listaEnc listaTeste;
     startList(&listaTeste);
     int i;
-    for (i = 0; i <= 50000; i++) { //adiciona varios elementos no inicio
+    for (i = 0; i <= 50000; i++) { //adiciona vários elementos no inicio
         addStartList(&listaTeste,i);
     }
     for (i = 50000; i >= 0; i--) {
@@ -24,7 +24,7 @@ START_TEST(testeAdicionarFimLista) {
     listaEnc listaTeste;
     startList(&listaTeste);
     int i;
-    for (i = 0; i <= 50000; i++) { //adiciona varios elementos no fim
+    for (i = 0; i <= 50000; i++) { //adiciona vários elementos no fim
         addEndList(&listaTeste,i);
     }
     for (i = 50000; i >= 0; i--) {
@@ -59,14 +59,14 @@ START_TEST(testeViolacaoMemLista) {
     int inicio;
     srand(time(NULL));
     int i;
-    for (i = 0; i < 10000;i++) { //adiciona elementos randomicamente tentando ocasionar uma falha de segmentacao
+    for (i = 0; i < 10000;i++) { //adiciona elementos randomicamente tentando ocasionar uma falha de segmentação
         inicio = rand() % 2;
         if (inicio)
             addStartList(&listaTeste,i);
         else
             addEndList(&listaTeste,i);
     }
-    for (i = 0; i < 50000; i++) { //tenta remover mais elementos do que eh possivel, a API deve se proteger disso
+    for (i = 0; i < 50000; i++) { //tenta remover mais elementos do que é possivel, a API deve se proteger disso
         inicio = rand() % 2;
         if (inicio)
             removeStartList(&listaTeste);
@@ -109,7 +109,7 @@ START_TEST(insercaoInicioDeque) {
     deque dequeTeste;
     startDeque(&dequeTeste,10000);
     int i;
-    for (i = 1; i <= 10000; i++) { //adiciona varios elementos no inicio
+    for (i = 1; i <= 10000; i++) { //adiciona vários elementos no inicio
         addStartDeque(&dequeTeste,i);
     }
     for (i = 10000; i >= 1; i--) {
@@ -124,7 +124,7 @@ START_TEST(insercaoFinalDeque) {
     deque dequeTeste;
     startDeque(&dequeTeste,10000);  
     int i;
-    for (i = 1; i <= 10000; i++) { //adiciona varios elementos no inicio
+    for (i = 1; i <= 10000; i++) { //adiciona vários elementos no inicio
         addEndDeque(&dequeTeste,i);
     }
     for (i = 10000; i >= 1; i--) {
@@ -170,6 +170,27 @@ START_TEST(detecaoFullDeque) {
     wreckDeque(&dequeTeste);
 }
 END_TEST
+
+START_TEST(insercaoRemocaoCircularDeque) {
+    deque dequeTeste;
+    startDeque(&dequeTeste,10);
+    int i;
+    for (i = 0; i < 10; i++) { //deque contem os elementos : 0 5 10 15 20 25 30 35 40 45
+        addEndDeque(&dequeTeste,(i*5));
+    }
+    //coloca os elementos do início no final, verificando se o próximo elemento do inicio é o esperado
+    //ex, para i = 1, o valor do inicio deve ser 5 (5 10 15 20 25 30 35 40 45 0), já para i = 10, o valor deve ser 0
+    //(0 5 10 15 20 25 30 35 40 45)
+    for (i = 0; i < 10000; i++) { 
+        int valInicio = viewStartDeque(&dequeTeste); 
+        ck_assert_int_eq(valInicio,(i%10)*5);
+        removeStartDeque(&dequeTeste);
+        addEndDeque(&dequeTeste,valInicio);
+    }
+    wreckDeque(&dequeTeste);
+} 
+END_TEST
+
 //Suite dos testes do Deque
 Suite *criar_deque_suite() {
     Suite *s;
@@ -180,6 +201,7 @@ Suite *criar_deque_suite() {
     tcase_add_test(tc_deque,insercaoFinalDeque);
     tcase_add_test(tc_deque,insercaoInicioFimDeque);
     tcase_add_test(tc_deque,detecaoFullDeque);
+    tcase_add_test(tc_deque,insercaoRemocaoCircularDeque);
     suite_add_tcase(s,tc_deque);
     return s;
 }

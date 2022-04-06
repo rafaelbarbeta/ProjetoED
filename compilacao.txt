@@ -1,0 +1,5 @@
+Utilizamos a biblioteca check para verificar o funcionamento das duas estruturas de dados.
+
+Para compilar, gcc -o testeEstruturas testeEstruturas.c lista.h deque.h lista.c lista.h `pkg-config --cflags --libs check`
+
+
