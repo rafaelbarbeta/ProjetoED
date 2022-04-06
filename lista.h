@@ -20,17 +20,17 @@ typedef struct  {
 } iterador;
 
 // funções da lista encadeada
-void startList (listaEnc *l); //inicia
-int emptyList (listaEnc *l); //vazio
-void addStartList (listaEnc *l, type num); //inserir (inicio)
-void addEndList (listaEnc *l, type num); //inseri (final)
-void removeStartList (listaEnc *l); //remove (inicio)
-void removeEndList (listaEnc *l); //remove (final)
-unsigned int sizeList (listaEnc *l); //tamanho
-type viewStartList (listaEnc *l); //visualizar (inicio)
-type viewEndList (listaEnc *l); //visualizar (final)
-// função de complexidade O(n)
-void wreckList (listaEnc *l); //destroi
+void startList (listaEnc *l); //inicia a lista com o sentinela
+int emptyList (listaEnc *l); //se a lista esta vazia retorna 1, se nao 0
+void addStartList (listaEnc *l, type num); //insere elemento "num" no inicio da lista
+void addEndList (listaEnc *l, type num); //insere elemento "num" no final da lista
+void removeStartList (listaEnc *l); //remove primeiro elemento da lista
+void removeEndList (listaEnc *l); //remove ultimo elemento da lista
+unsigned int sizeList (listaEnc *l); //retorna tamanho da lista (quantidade de nodes)
+type viewStartList (listaEnc *l); //retorna primeiro elemento da lista (data)
+type viewEndList (listaEnc *l); //retorna ultimo elemento da lista (data)
+// funcao de complexidade O(n)
+void wreckList (listaEnc *l); //destroi completamente a lista
 
 
 //funções que utilizam o iterador
@@ -42,13 +42,13 @@ iterador firstElementList(listaEnc* l); //retorna um iterador apontando para o p
 iterador lastElementList(listaEnc* l);  //retorna um iterador apontando para o ultimo elemento da lista
 
 type getElementList(iterador i); //retorna o valor do elemento guardado na posição apontado pelo iterador
-int nextElementList(iterador* i); //avança uma posição na lista, deve ser passado o endereço do iterador
-int previousElementList(iterador* i); //retorna uma posição na lista, deve ser passado o endereço do iterador
+int nextElementList(iterador* i); //avanca uma posicao na lista, deve ser passado o endereco do iterador
+int previousElementList(iterador* i); //retorna uma posicao na lista, deve ser passado o endereço do iterador
 int endList(iterador i); //verifica se a lista acabou
 
 // funções de complexidade O(n)
-iterador searchFirstList(listaEnc* l , type data); //procura um elemento apartir da primeira posição da lista
-iterador searchAfterList(listaEnc* l,iterador i, type data); //procura um elemento apartir da posição apontada pelo iterador
-iterador searchPositionList(listaEnc* l, unsigned int position); //retorna um iterador apontando para o elemento na posição especificada "position"
-                                                                //0 é a posição do primeiro elemento
+iterador searchFirstList(listaEnc* l , type data); //procura um elemento apartir da primeira posicao da lista
+iterador searchAfterList(listaEnc* l,iterador i, type data); //procura um elemento apartir da posicao apontada pelo iterador
+iterador searchPositionList(listaEnc* l, unsigned int position); //retorna um iterador apontando para o elemento na posicao especificada "position"
+                                                                //0 é a posicao do primeiro elemento
 #endif

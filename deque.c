@@ -2,12 +2,13 @@
 #include "deque.h"
 
 void startDeque (deque *d, unsigned int size) {
-    d->head = 0; //indices iniciados em 0
+    d->head = 0;
     d->tail = 0;
     d->imax = size; 
-    d->vect = (type*) malloc ((size+1)* sizeof(type)); //aloca uma posicao extra para ajudar nas operacoes do deque (empty e full)
+    d->vect = (type*) malloc ((size+1)* sizeof(type)); //aloca a quantidade size com uma posicao extra para ajudar nas operacoes do deque (empty e full)
 }
 void nextDeque (deque *d, unsigned int *index, int mode) {
+    // a variavel mode indica se a posicao ira avancar(1) ou retroceder(-1)
     //caso o index nao esteja "nos extremos do vetor" vai para a proxima posicao normalmente
     if (*index != 0 && *index != (d->imax)) {
         *index = *index + mode; //incrementa ou decrementa 1 dependendo do mode
