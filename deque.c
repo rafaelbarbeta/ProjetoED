@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include "deque.h"
-
 int startDeque (deque *d, unsigned int size) {
     d->head = 0; //índices iniciados em 0
     d->tail = 0;
