@@ -46,6 +46,7 @@ int main () {
                 deque chave;   
                 inicializar(&textoPuro,&chave,0);
                 //trecho para descriptografar
+                printf("O texto descriptografado é:\n");
                 iterador i;
                 for (i = firstElementList(&textoPuro); !endList(i); nextElementList(&i)) {
                     char charchave;

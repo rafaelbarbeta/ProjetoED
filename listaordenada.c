@@ -1,32 +1,49 @@
-#include "lista.h"
+#include "listaordenada.h"
 #include <stdlib.h>
 
 /* funções da lista sem iterador*/
-void startList (listaEnc *l) {
+void startList (listaEnc *l,int (*user_compare)(type x, type y)) {
     l->qty = 0;
     l->sentinel = (struct node*) malloc(sizeof(struct node)); //constroi o node sentinela
     l->sentinel->next = l->sentinel; //faz a sentinela apontar para si mesmo no next e prev
     l->sentinel->prev = l->sentinel;
+    l->user_compare = user_compare; //guarda o endereco da funcao de comparacao definida pelo usuario
 }
 
-void addStartList (listaEnc *l, type num) {
-    struct node* newNode = malloc(sizeof(struct node));
-    newNode->data = num; 
-    newNode->next = l->sentinel->next; //o próximo depois do novo no é o antigo next da sentinela
-    newNode->prev = l->sentinel; //a anterior é a propria sentinela
-    l->sentinel->next->prev = newNode; //o prev do antigo primeiro (ou a sentinela) recebe o endereço do novo node
-    l->sentinel->next = newNode; //o next da sentinela aponta para o início da lista, no caso, o novo node
-    l->qty++;
-}
-
-void addEndList (listaEnc *l, type num) {
+void sortedInsert(listaEnc *l, type num) {
     struct node* newNode = malloc(sizeof(struct node));
     newNode->data = num;
+    if(emptyList(l)) { // se a lista estiver vazia, apenas insere no inicio normalmente
+        newNode->next = l->sentinel->next; //o próximo depois do novo no é o antigo next da sentinela
+        newNode->prev = l->sentinel; //a anterior é a propria sentinela
+        l->sentinel->next->prev = newNode; //o prev do antigo primeiro (ou a sentinela) recebe o endereço do novo node
+        l->sentinel->next = newNode; //o next da sentinela aponta para o início da lista, no caso, o novo node
+        l->qty++;
+        return;
+    }
+    iterador i;
+    /*percorre-se toda a lista procurando onde o elemento deve ser inserido para que a lista continue ordenada.
+    para isso, caso "num" venha antes da posicao apontada pelo iterador i, sabemos que "num" deve ser inserido imediatamente
+    antes dessa posicao apontada por i, pois i vem depois de todos os valores ja percorridos, mas vem antes desse valor.
+    */
+    for (i = firstElementList(l); !endList(i); nextElementList(&i)) {
+        if (l->user_compare(num,getElementList(i)) <= 0) { 
+            newNode->next = i.position; //realiza uma insercao entre o elemento apontado por i e seu antecessor
+            newNode->prev = i.position->prev;
+            i.position->prev->next = newNode;
+            i.position->prev = newNode;
+            l->qty++;
+            return; 
+        }
+    }
+    //caso "num" venha depois de todos os elementos da lista, entao deve ocorrer uma insercao no final
+    //o loop for nao ira inseririr o elemento em nenhum momento se esse for o caso, que eh o pior em termos de complexidade
     newNode->next = l->sentinel; //o próximo depois do novo é a própria sentinela
     newNode->prev = l->sentinel->prev; //o anterior antes do novo é o antigo prev da sentinela
     l->sentinel->prev->next = newNode; //caso não seja o único, o next do antigo último apontara para o novo primeiro
     l->sentinel->prev = newNode; //o prev da sentinela aponta para o último da lista, no caso, o novo node
     l->qty++;
+    return;
 }
 
 type viewStartList (listaEnc *l) {
