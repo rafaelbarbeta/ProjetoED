@@ -97,6 +97,36 @@ void wreckList (listaEnc *l) {
     l->qty = 0;
 }
 /* funcoes da lista com iterador */
+iterador firstElementList(listaEnc* l) {
+    iterador i; 
+    i.list = l;
+    i.position = l->sentinel->next; // se a lista estiver vazia, aponta para sentinel
+    return (i); 
+}
+
+iterador lastElementList(listaEnc* l) {
+    iterador i;
+    i.list = l;
+    i.position = l->sentinel->prev; // se a lista estiver vazia, aponta para sentinel
+    return (i); 
+}
+
+int nextElementList(iterador* i) {
+    if (!emptyList(i->list)) { //a lista precisa ter algum elemento
+        i->position = i->position->next; //atualiza iterador para o proximo elemento
+        return (1);
+    }
+    else return(0); //funcao nao executada
+}
+
+int previousElementList(iterador* i) {
+    if (!emptyList(i->list)) { //a lista precisa ter algum elemento
+        i->position = i->position->prev; //atualiza iterador para o elemento anterior
+        return (1);
+    }
+    else return (0); //funcao nao executada
+}
+
 void insertAfterList (listaEnc* l,iterador i, type data) {
     if (l != i.list) { //o iterador obrigatoriamente precisa ser da mesma lista que a lista apontada nos parametros
         return;         //do contrario, a funcao não ira executar por seguranca
