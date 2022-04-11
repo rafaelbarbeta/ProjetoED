@@ -112,7 +112,7 @@ iterador lastElementList(listaEnc* l) {
 }
 
 int nextElementList(iterador* i) {
-    if (!emptyList(i->list)) { //a lista precisa ter algum elemento
+    if (!endList(*i)) { //a lista precisa ter algum elemento
         i->position = i->position->next; //atualiza iterador para o proximo elemento
         return (1);
     }
@@ -120,7 +120,7 @@ int nextElementList(iterador* i) {
 }
 
 int previousElementList(iterador* i) {
-    if (!emptyList(i->list)) { //a lista precisa ter algum elemento
+    if (!endList(*i)) { //a lista precisa ter algum elemento
         i->position = i->position->prev; //atualiza iterador para o elemento anterior
         return (1);
     }
