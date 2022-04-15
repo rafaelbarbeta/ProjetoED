@@ -165,3 +165,30 @@ iterador searchAfterList(listaEnc* l,iterador i, type data) {
         nextElementList(&i);          //a funcao termina pois em ultimo caso o valor esta na propria sentinela
     return i; //retorna o iterador apontando para o elemento procurado ou um iterador apontando para o fim se nao achar
 }
+
+int endList(iterador i){
+    return i.position == i.list->sentinel; //retorna verdadeiro caso a lista tenha acabado
+}
+
+type getElementList(iterador i){
+    if(!endList(i)){ //verifica se nao acabou a lista pois caso tenha acabado ira apontar para um endereco invalido
+        return i.position->data;
+    }
+    else{
+        return 0;
+    }
+}
+
+int removeElementList (listaEnc* l,iterador *i){
+    if(i->position != i->list->sentinel){
+        struct node *deleted = i->position;
+        return deleted->data;
+
+        deleted->prev->next = deleted->next;
+        deleted->next->prev = deleted->prev;
+
+        i->position = i->position->next;
+        free(deleted);
+        i->list->qty--;
+    }
+}
