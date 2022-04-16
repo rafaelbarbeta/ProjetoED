@@ -1,7 +1,7 @@
 #include "listaordenada.h"
 #include <stdlib.h>
 
-/* funções da lista sem iterador*/
+/* funcoes da lista sem iterador*/
 void startList (listaEnc *l,int (*user_compare)(type x, type y)) {
     l->qty = 0;
     l->sentinel = (struct node*) malloc(sizeof(struct node)); //constroi o node sentinela
@@ -10,6 +10,48 @@ void startList (listaEnc *l,int (*user_compare)(type x, type y)) {
     l->user_compare = user_compare; //guarda o endereco da funcao de comparacao definida pelo usuario
 }
 
+int emptyList (listaEnc *l){
+    struct node *newNode = l->sentinel->prev; //cria uma variavel estatica que recebe sentinel prev
+    if(newNode==l->sentinel){ //se essa variavel for igual ao sentinel significa que a lista esta vazia
+        return 1; //esta vazia
+    }
+    else{ //caso contrario significa que a lista nao esta vazia
+        return 0;
+    }
+}
+
+void removeStartList (listaEnc *l) {
+    struct node *firstNode = l->sentinel->next; //cria variavel estatica para o sentinela next (ultimo node)
+    if (!emptyList(l)) {//se a lista nao esta vazia
+        firstNode->next->prev = firstNode->prev; //aponta next do segundo node para o ultimo
+        firstNode->prev->next = firstNode->next; //aponta next do ultimo node para o segundo
+        free(firstNode); //destroi "primeiro node"
+        l->qty--;
+    }
+}
+
+void removeEndList (listaEnc *l){
+    struct node *lastNode = l->sentinel->prev; //cria uma variavel estatica que recebe sentinel prev
+    if(!emptyList(l)){ //se a lista nao esta vazia
+        lastNode->next->prev = lastNode->prev; //aponta prev do primeiro elemento pro penultimo node
+        lastNode->prev->next = lastNode->next; //atualiza next do penultimo node
+        free(lastNode); //destroi "ultimo node"
+        l->qty--;
+    }
+}
+
+unsigned int sizeList (listaEnc *l) {
+    return (l->qty); //retorna qtd nodes
+}
+
+type viewStartList (listaEnc *l) {
+    return (l->sentinel->next->data); //retorna data do posterior ao sentinela
+}
+
+type viewEndList (listaEnc *l) {
+    return (l->sentinel->prev->data); //retorna data do anterior ao sentinela 
+}
+/* funcoes de complexidade O(n) */
 void sortedInsert(listaEnc *l, type num) {
     struct node* newNode = malloc(sizeof(struct node));
     newNode->data = num;
@@ -46,49 +88,6 @@ void sortedInsert(listaEnc *l, type num) {
     return;
 }
 
-type viewStartList (listaEnc *l) {
-    return (l->sentinel->next->data); //retorna data do posterior ao sentinela
-}
-
-type viewEndList (listaEnc *l) {
-    return (l->sentinel->prev->data); //retorna data do anterior ao sentinela 
-}
-
-unsigned int sizeList (listaEnc *l) {
-    return (l->qty); //retorna qtd nodes
-}
-
-
-void removeEndList (listaEnc *l){
-    struct node *lastNode = l->sentinel->prev; //cria uma variavel estatica que recebe sentinel prev
-    if(!emptyList(l)){ //se a lista nao esta vazia
-        lastNode->next->prev = lastNode->prev; //aponta prev do primeiro elemento pro penultimo node
-        lastNode->prev->next = lastNode->next; //atualiza next do penultimo node
-        free(lastNode); //destroi "ultimo node"
-        l->qty--;
-    }
-}
-
-void removeStartList (listaEnc *l) {
-    struct node *firstNode = l->sentinel->next; //cria variavel estatica para o sentinela next (ultimo node)
-    if (!emptyList(l)) {//se a lista nao esta vazia
-        firstNode->next->prev = firstNode->prev; //aponta next do segundo node para o ultimo
-        firstNode->prev->next = firstNode->next; //aponta next do ultimo node para o segundo
-        free(firstNode); //destroi "primeiro node"
-        l->qty--;
-    }
-}
-
-int emptyList (listaEnc *l){
-    struct node *newNode = l->sentinel->prev; //cria uma variavel estatica que recebe sentinel prev
-    if(newNode==l->sentinel){ //se essa variavel for igual ao sentinel significa que a lista esta vazia
-        return 1; //esta vazia
-    }
-    else{ //caso contrario significa que a lista nao esta vazia
-        return 0;
-    }
-}
-
 void wreckList (listaEnc *l) {
     while (!emptyList(l)) //remove enquanto ainda houver elemento
         removeStartList(l);
@@ -96,7 +95,25 @@ void wreckList (listaEnc *l) {
     l->sentinel = NULL;
     l->qty = 0;
 }
+
+
+
 /* funcoes da lista com iterador */
+
+int removeElementList (listaEnc* l,iterador *i){
+    if(!endList(*i)){
+        struct node* nextElement = i->position->next; //guarda o endereco do proximo e do anterior ao node apontado pelo iterador
+        struct node* prevElement = i->position->prev;
+        free(i->position); //efetivamente apaga o elemento da lista
+        nextElement->prev = prevElement; //atualiza os ponteiros
+        prevElement->next = nextElement;
+        i->position = nextElement; // avanca o iterador em uma posicao para que ele nao aponte para um elemento invalido
+        l->qty--;
+        return 1;
+    }
+    return 0; // a operacao falhou
+}
+
 iterador firstElementList(listaEnc* l) {
     iterador i; 
     i.list = l;
@@ -109,6 +126,15 @@ iterador lastElementList(listaEnc* l) {
     i.list = l;
     i.position = l->sentinel->prev; // se a lista estiver vazia, aponta para sentinel
     return (i); 
+}
+
+type getElementList(iterador i){
+    if(!endList(i)){ //verifica se nao acabou a lista pois caso tenha acabado ira apontar para um endereco invalido
+        return i.position->data;
+    }
+    else{
+        return 0;
+    }
 }
 
 int nextElementList(iterador* i) {
@@ -127,28 +153,8 @@ int previousElementList(iterador* i) {
     else return (0); //funcao nao executada
 }
 
-void insertAfterList (listaEnc* l,iterador i, type data) {
-    if (l != i.list) { //o iterador obrigatoriamente precisa ser da mesma lista que a lista apontada nos parametros
-        return;         //do contrario, a funcao não ira executar por seguranca
-    }
-    struct node *newNode = malloc(sizeof(struct node));
-    newNode->data = data;
-    newNode->prev = i.position;
-    newNode->next = i.position->next;
-    i.position->next->prev = newNode;
-    i.position->next = newNode;
-}
-
-void insertBeforeList (listaEnc* l,iterador i, type data) {
-    if (l != i.list) { //o iterador obrigatoriamente precisa ser da mesma lista que a lista apontada nos parâmetros
-        return;         //do contrario, a funcao nao ira executar por seguranca
-    }
-    struct node *newNode = malloc(sizeof(struct node));
-    newNode->data = data;
-    newNode->prev = i.position->prev;
-    newNode->next = i.position;
-    i.position->prev->next = newNode;
-    i.position->prev = newNode;
+int endList(iterador i){
+    return i.position == i.list->sentinel; //retorna verdadeiro caso a lista tenha acabado
 }
 
 iterador searchFirstList(listaEnc* l , type data) {
@@ -166,29 +172,17 @@ iterador searchAfterList(listaEnc* l,iterador i, type data) {
     return i; //retorna o iterador apontando para o elemento procurado ou um iterador apontando para o fim se nao achar
 }
 
-int endList(iterador i){
-    return i.position == i.list->sentinel; //retorna verdadeiro caso a lista tenha acabado
+iterador searchPositionList(listaEnc* l, unsigned int position) {
+    iterador i;
+    i = firstElementList(l); // obtem um iterador apontando para o inicio da lista
+    while (position != 0) { // avanca o iterador ate chegar na posicao
+        if (endList(i)) //caso chegue no fim da lista, retorna o iterador apontando para sentinel (endList)
+            return i;
+        i.position = i.position->next;
+        position--;
+    }
+    return i; //retorna o iterador apontando para o elemento desejado
 }
 
-type getElementList(iterador i){
-    if(!endList(i)){ //verifica se nao acabou a lista pois caso tenha acabado ira apontar para um endereco invalido
-        return i.position->data;
-    }
-    else{
-        return 0;
-    }
-}
 
-int removeElementList (listaEnc* l,iterador *i){
-    if(i->position != i->list->sentinel){
-        struct node *deleted = i->position;
-        return deleted->data;
 
-        deleted->prev->next = deleted->next;
-        deleted->next->prev = deleted->prev;
-
-        i->position = i->position->next;
-        free(deleted);
-        i->list->qty--;
-    }
-}

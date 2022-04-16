@@ -2,7 +2,7 @@
 
 #define DEQUE_H
 //estrutra do deque
-typedef char type;
+typedef int type;
 typedef struct {
     unsigned int head; //head aponta para a proxima posição vazia apos o primeiro elemento
     unsigned int tail; //tail aponta para o último elemento
