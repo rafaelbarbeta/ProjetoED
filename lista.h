@@ -2,7 +2,7 @@
 
 #define LISTA_H
 // estruturas da lista encadeada
-typedef int type;
+typedef char type;
 typedef struct {
     struct node *sentinel;
     unsigned int qty;
