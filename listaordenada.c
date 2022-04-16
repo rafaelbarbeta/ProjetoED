@@ -1,17 +1,17 @@
 #include "listaordenada.h"
 #include <stdlib.h>
 
-/* funcoes da lista sem iterador*/
-void startList (listaEnc *l,int (*user_compare)(type x, type y)) {
+/* funcoes da lista sem iteradorOrd*/
+void startListOrd (listaEncOrd *l,int (*user_compare)(typeOrd x, typeOrd y)) {
     l->qty = 0;
-    l->sentinel = (struct node*) malloc(sizeof(struct node)); //constroi o node sentinela
+    l->sentinel = (struct nodeOrd*) malloc(sizeof(struct nodeOrd)); //constroi o node sentinela
     l->sentinel->next = l->sentinel; //faz a sentinela apontar para si mesmo no next e prev
     l->sentinel->prev = l->sentinel;
     l->user_compare = user_compare; //guarda o endereco da funcao de comparacao definida pelo usuario
 }
 
-int emptyList (listaEnc *l){
-    struct node *newNode = l->sentinel->prev; //cria uma variavel estatica que recebe sentinel prev
+int emptyListOrd (listaEncOrd *l){
+    struct nodeOrd *newNode = l->sentinel->prev; //cria uma variavel estatica que recebe sentinel prev
     if(newNode==l->sentinel){ //se essa variavel for igual ao sentinel significa que a lista esta vazia
         return 1; //esta vazia
     }
@@ -20,9 +20,9 @@ int emptyList (listaEnc *l){
     }
 }
 
-void removeStartList (listaEnc *l) {
-    struct node *firstNode = l->sentinel->next; //cria variavel estatica para o sentinela next (ultimo node)
-    if (!emptyList(l)) {//se a lista nao esta vazia
+void removeStartListOrd (listaEncOrd *l) {
+    struct nodeOrd *firstNode = l->sentinel->next; //cria variavel estatica para o sentinela next (ultimo node)
+    if (!emptyListOrd(l)) {//se a lista nao esta vazia
         firstNode->next->prev = firstNode->prev; //aponta next do segundo node para o ultimo
         firstNode->prev->next = firstNode->next; //aponta next do ultimo node para o segundo
         free(firstNode); //destroi "primeiro node"
@@ -30,9 +30,9 @@ void removeStartList (listaEnc *l) {
     }
 }
 
-void removeEndList (listaEnc *l){
-    struct node *lastNode = l->sentinel->prev; //cria uma variavel estatica que recebe sentinel prev
-    if(!emptyList(l)){ //se a lista nao esta vazia
+void removeEndListOrd (listaEncOrd *l){
+    struct nodeOrd *lastNode = l->sentinel->prev; //cria uma variavel estatica que recebe sentinel prev
+    if(!emptyListOrd(l)){ //se a lista nao esta vazia
         lastNode->next->prev = lastNode->prev; //aponta prev do primeiro elemento pro penultimo node
         lastNode->prev->next = lastNode->next; //atualiza next do penultimo node
         free(lastNode); //destroi "ultimo node"
@@ -40,22 +40,22 @@ void removeEndList (listaEnc *l){
     }
 }
 
-unsigned int sizeList (listaEnc *l) {
+unsigned int sizeListOrd (listaEncOrd *l) {
     return (l->qty); //retorna qtd nodes
 }
 
-type viewStartList (listaEnc *l) {
+typeOrd viewStartListOrd (listaEncOrd *l) {
     return (l->sentinel->next->data); //retorna data do posterior ao sentinela
 }
 
-type viewEndList (listaEnc *l) {
+typeOrd viewEndListOrd (listaEncOrd *l) {
     return (l->sentinel->prev->data); //retorna data do anterior ao sentinela 
 }
 /* funcoes de complexidade O(n) */
-void sortedInsert(listaEnc *l, type num) {
-    struct node* newNode = malloc(sizeof(struct node));
+void sortedInsertOrd(listaEncOrd *l, typeOrd num) {
+    struct nodeOrd* newNode = malloc(sizeof(struct nodeOrd));
     newNode->data = num;
-    if(emptyList(l)) { // se a lista estiver vazia, apenas insere no inicio normalmente
+    if(emptyListOrd(l)) { // se a lista estiver vazia, apenas insere no inicio normalmente
         newNode->next = l->sentinel->next; //o próximo depois do novo no é o antigo next da sentinela
         newNode->prev = l->sentinel; //a anterior é a propria sentinela
         l->sentinel->next->prev = newNode; //o prev do antigo primeiro (ou a sentinela) recebe o endereço do novo node
@@ -63,13 +63,13 @@ void sortedInsert(listaEnc *l, type num) {
         l->qty++;
         return;
     }
-    iterador i;
+    iteradorOrd i;
     /*percorre-se toda a lista procurando onde o elemento deve ser inserido para que a lista continue ordenada.
-    para isso, caso "num" venha antes da posicao apontada pelo iterador i, sabemos que "num" deve ser inserido imediatamente
+    para isso, caso "num" venha antes da posicao apontada pelo iteradorOrd i, sabemos que "num" deve ser inserido imediatamente
     antes dessa posicao apontada por i, pois i vem depois de todos os valores ja percorridos, mas vem antes desse valor.
     */
-    for (i = firstElementList(l); !endList(i); nextElementList(&i)) {
-        if (l->user_compare(num,getElementList(i)) <= 0) { 
+    for (i = firstElementListOrd(l); !endListOrd(i); nextElementListOrd(&i)) {
+        if (l->user_compare(num,getElementListOrd(i)) <= 0) { 
             newNode->next = i.position; //realiza uma insercao entre o elemento apontado por i e seu antecessor
             newNode->prev = i.position->prev;
             i.position->prev->next = newNode;
@@ -88,9 +88,9 @@ void sortedInsert(listaEnc *l, type num) {
     return;
 }
 
-void wreckList (listaEnc *l) {
-    while (!emptyList(l)) //remove enquanto ainda houver elemento
-        removeStartList(l);
+void wreckListOrd (listaEncOrd *l) {
+    while (!emptyListOrd(l)) //remove enquanto ainda houver elemento
+        removeStartListOrd(l);
     free(l->sentinel);
     l->sentinel = NULL;
     l->qty = 0;
@@ -98,38 +98,38 @@ void wreckList (listaEnc *l) {
 
 
 
-/* funcoes da lista com iterador */
+/* funcoes da lista com iteradorOrd */
 
-int removeElementList (listaEnc* l,iterador *i){
-    if(!endList(*i)){
-        struct node* nextElement = i->position->next; //guarda o endereco do proximo e do anterior ao node apontado pelo iterador
-        struct node* prevElement = i->position->prev;
+int removeElementListOrd (listaEncOrd* l,iteradorOrd *i){
+    if(!endListOrd(*i)){
+        struct nodeOrd* nextElement = i->position->next; //guarda o endereco do proximo e do anterior ao node apontado pelo iteradorOrd
+        struct nodeOrd* prevElement = i->position->prev;
         free(i->position); //efetivamente apaga o elemento da lista
         nextElement->prev = prevElement; //atualiza os ponteiros
         prevElement->next = nextElement;
-        i->position = nextElement; // avanca o iterador em uma posicao para que ele nao aponte para um elemento invalido
+        i->position = nextElement; // avanca o iteradorOrd em uma posicao para que ele nao aponte para um elemento invalido
         l->qty--;
         return 1;
     }
     return 0; // a operacao falhou
 }
 
-iterador firstElementList(listaEnc* l) {
-    iterador i; 
+iteradorOrd firstElementListOrd(listaEncOrd* l) {
+    iteradorOrd i; 
     i.list = l;
     i.position = l->sentinel->next; // se a lista estiver vazia, aponta para sentinel
     return (i); 
 }
 
-iterador lastElementList(listaEnc* l) {
-    iterador i;
+iteradorOrd lastElementListOrd(listaEncOrd* l) {
+    iteradorOrd i;
     i.list = l;
     i.position = l->sentinel->prev; // se a lista estiver vazia, aponta para sentinel
     return (i); 
 }
 
-type getElementList(iterador i){
-    if(!endList(i)){ //verifica se nao acabou a lista pois caso tenha acabado ira apontar para um endereco invalido
+typeOrd getElementListOrd(iteradorOrd i){
+    if(!endListOrd(i)){ //verifica se nao acabou a lista pois caso tenha acabado ira apontar para um endereco invalido
         return i.position->data;
     }
     else{
@@ -137,52 +137,49 @@ type getElementList(iterador i){
     }
 }
 
-int nextElementList(iterador* i) {
-    if (!endList(*i)) { //a lista precisa ter algum elemento
-        i->position = i->position->next; //atualiza iterador para o proximo elemento
+int nextElementListOrd(iteradorOrd* i) {
+    if (!endListOrd(*i)) { //a lista precisa ter algum elemento
+        i->position = i->position->next; //atualiza iteradorOrd para o proximo elemento
         return (1);
     }
     else return(0); //funcao nao executada
 }
 
-int previousElementList(iterador* i) {
-    if (!endList(*i)) { //a lista precisa ter algum elemento
-        i->position = i->position->prev; //atualiza iterador para o elemento anterior
+int previousElementListOrd(iteradorOrd* i) {
+    if (!endListOrd(*i)) { //a lista precisa ter algum elemento
+        i->position = i->position->prev; //atualiza iteradorOrd para o elemento anterior
         return (1);
     }
     else return (0); //funcao nao executada
 }
 
-int endList(iterador i){
+int endListOrd(iteradorOrd i){
     return i.position == i.list->sentinel; //retorna verdadeiro caso a lista tenha acabado
 }
 
-iterador searchFirstList(listaEnc* l , type data) {
+iteradorOrd searchFirstListOrd(listaEncOrd* l , typeOrd data) {
     l->sentinel->data = data; //coloca o valor a ser procurado na sentinela
-    iterador searchIt = firstElementList(l); //cria um iterador apontando para o inicio da lista
-    while (getElementList(searchIt) != data) //avança de posicao até achar o valor procurado
-        nextElementList(&searchIt);          //a funcao termina pois em ultimo caso o valor está na propria sentinela
-    return searchIt; //retorna o iterador apontando para o elemento procurado ou um iterador apontanto para o fim se nao achar 
+    iteradorOrd searchIt = firstElementListOrd(l); //cria um iteradorOrd apontando para o inicio da lista
+    while (getElementListOrd(searchIt) != data) //avança de posicao até achar o valor procurado
+        nextElementListOrd(&searchIt);          //a funcao termina pois em ultimo caso o valor está na propria sentinela
+    return searchIt; //retorna o iteradorOrd apontando para o elemento procurado ou um iteradorOrd apontanto para o fim se nao achar 
 }
 
-iterador searchAfterList(listaEnc* l,iterador i, type data) {
+iteradorOrd searchAfterListOrd(listaEncOrd* l,iteradorOrd i, typeOrd data) {
     l->sentinel->data = data; //coloca o valor a ser procurado na sentinela
-    while (getElementList(i)!= data) //avança searchIt de posição até achar o valor procurado
-        nextElementList(&i);          //a funcao termina pois em ultimo caso o valor esta na propria sentinela
-    return i; //retorna o iterador apontando para o elemento procurado ou um iterador apontando para o fim se nao achar
+    while (getElementListOrd(i)!= data) //avança searchIt de posição até achar o valor procurado
+        nextElementListOrd(&i);          //a funcao termina pois em ultimo caso o valor esta na propria sentinela
+    return i; //retorna o iteradorOrd apontando para o elemento procurado ou um iteradorOrd apontando para o fim se nao achar
 }
 
-iterador searchPositionList(listaEnc* l, unsigned int position) {
-    iterador i;
-    i = firstElementList(l); // obtem um iterador apontando para o inicio da lista
-    while (position != 0) { // avanca o iterador ate chegar na posicao
-        if (endList(i)) //caso chegue no fim da lista, retorna o iterador apontando para sentinel (endList)
+iteradorOrd searchPositionListOrd(listaEncOrd* l, unsigned int position) {
+    iteradorOrd i;
+    i = firstElementListOrd(l); // obtem um iteradorOrd apontando para o inicio da lista
+    while (position != 0) { // avanca o iteradorOrd ate chegar na posicao
+        if (endListOrd(i)) //caso chegue no fim da lista, retorna o iteradorOrd apontando para sentinel (endList)
             return i;
         i.position = i.position->next;
         position--;
     }
-    return i; //retorna o iterador apontando para o elemento desejado
+    return i; //retorna o iteradorOrd apontando para o elemento desejado
 }
-
-
-

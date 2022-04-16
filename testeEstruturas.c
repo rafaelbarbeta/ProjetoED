@@ -1,6 +1,7 @@
 #include <time.h>
 #include <stdlib.h>
-#include "listapura.h"
+#include "lista.h"
+#include "listaordenada.h"
 #include "deque.h"
 #include <check.h>
 
@@ -89,6 +90,20 @@ START_TEST(poucosElementosLista) {
     wreckList(&listaTeste);
 }
 END_TEST
+
+int compare(int x, int y) {
+    if (x > y)
+        return 1;
+    else
+        return -1;
+}
+
+int compareQsort(const void * x, const void * y) {
+    return *(int*)x - *(int*)y;
+}
+
+
+
 //Cria a suite da lista encadeada
 Suite *criar_lista_suite() {
     Suite *s;
@@ -205,13 +220,53 @@ Suite *criar_deque_suite() {
     suite_add_tcase(s,tc_deque);
     return s;
 }
+
+/* funcoes da lista ordenada */
+START_TEST(insercaoOrdenada) {
+    listaEncOrd listaOrdenadaTeste;
+    int (*funcaoOrdenacao)(int,int);
+    funcaoOrdenacao = compare;
+    startListOrd(&listaOrdenadaTeste,funcaoOrdenacao);
+    int vetorTeste[1000]; //vetor com valores de teste
+    srand(time(NULL));
+    int i;
+    for (i = 0; i < 1000; i++) { //adiciona números aleatorios na lista ordenada e no vetor
+        int random;
+        random = rand() % 10000;
+        vetorTeste[i] = random;
+        sortedInsertOrd(&listaOrdenadaTeste,random);
+    }
+    qsort(vetorTeste,1000,sizeof(int),compareQsort); //funcao para ordenar os valores randomicos obtidos
+    iteradorOrd it;
+    it = firstElementListOrd(&listaOrdenadaTeste);
+    for (i = 0; i < 1000; i++) { //verifica se os elementos foram ordenados propriamente
+        ck_assert_int_eq(getElementListOrd(it),vetorTeste[i]);
+        nextElementListOrd(&it);
+    }
+    wreckListOrd(&listaOrdenadaTeste);
+}
+END_TEST
+
+Suite *criar_listaOrdenada_suite() {
+    Suite *s;
+    TCase *tc;
+    s = suite_create("Teste Lista Ordenada");
+    tc = tcase_create("TCase Lista Ordenada");
+    tcase_add_test(tc,insercaoOrdenada);
+    suite_add_tcase(s,tc);
+    return s;
+}
+
 int main() {
     Suite *lista = criar_lista_suite();
     Suite *deque = criar_deque_suite();
+    Suite *lista_ordenada = criar_listaOrdenada_suite();
     SRunner *runLista = srunner_create(lista);
     SRunner *runDeque = srunner_create(deque);
+    SRunner *runListaOrdenada = srunner_create(lista_ordenada);
     srunner_run_all(runLista,CK_NORMAL);
     srunner_run_all(runDeque,CK_NORMAL);
+    srunner_run_all(runListaOrdenada,CK_NORMAL);
     srunner_free(runLista);
     srunner_free(runDeque);
     return 0;
