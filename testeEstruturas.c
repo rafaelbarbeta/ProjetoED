@@ -221,25 +221,25 @@ Suite *criar_deque_suite() {
     return s;
 }
 
-/* funcoes da lista ordenada */
+/* testes da lista ordenada */
 START_TEST(insercaoOrdenada) {
     listaEncOrd listaOrdenadaTeste;
-    int (*funcaoOrdenacao)(int,int);
+    int (*funcaoOrdenacao)(int,int); //cria ponteiro de funcao para a ordencao da lista ordenada
     funcaoOrdenacao = compare;
     startListOrd(&listaOrdenadaTeste,funcaoOrdenacao);
-    int vetorTeste[1000]; //vetor com valores de teste
+    int vetorTeste[10000]; //vetor com valores de teste
     srand(time(NULL));
     int i;
-    for (i = 0; i < 1000; i++) { //adiciona números aleatorios na lista ordenada e no vetor
+    for (i = 0; i < 10000; i++) { //adiciona números aleatorios na lista ordenada e no vetor
         int random;
         random = rand() % 10000;
         vetorTeste[i] = random;
         sortedInsertOrd(&listaOrdenadaTeste,random);
     }
-    qsort(vetorTeste,1000,sizeof(int),compareQsort); //funcao para ordenar os valores randomicos obtidos
+    qsort(vetorTeste,10000,sizeof(int),compareQsort); //funcao para ordenar os valores randomicos obtidos no vetor
     iteradorOrd it;
     it = firstElementListOrd(&listaOrdenadaTeste);
-    for (i = 0; i < 1000; i++) { //verifica se os elementos foram ordenados propriamente
+    for (i = 0; i < 10000; i++) { //co para o vetor ordenado com a lista e verifica se esta ordenado
         ck_assert_int_eq(getElementListOrd(it),vetorTeste[i]);
         nextElementListOrd(&it);
     }
