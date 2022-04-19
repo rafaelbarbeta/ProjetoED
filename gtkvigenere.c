@@ -153,9 +153,10 @@ static void descriptografar(GtkWidget *botao, gpointer user_data) {
     char *letra = malloc(sizeof(char)); 
     for (i = firstElementList(&textoDecrip); !endList(i); nextElementList(&i)) {
         *letra = (char)getElementList(i);
-        gtk_text_buffer_insert(bufferViewTextoCrip,&it,letra,sizeof(char));
+        gtk_text_buffer_insert(bufferViewTextoCrip,&it,letra,sizeof(char)); //insere uma letra no buffer do texto
         gtk_text_iter_forward_char(&it);
     }
+    free(letra);
 
     gtk_widget_show_all (janelaResultado);
     //destroi o deque e a lista
