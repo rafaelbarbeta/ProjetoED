@@ -1,5 +1,5 @@
 Utilizamos a biblioteca check para verificar o funcionamento das duas estruturas de dados.
-Para a interface gráfica, utilizamos a versão 3 da biblioteca GTK.
+Para a interface gráfica, utilizamos a versão 3 da biblioteca GTK (libgtk-3-dev).
 
 Makefile para compilação:
 Para a compilação da aplicação utilizando a libgtk, usar comando "make gtkVigenere" e executar.
