@@ -1,5 +1,10 @@
 Utilizamos a biblioteca check para verificar o funcionamento das duas estruturas de dados.
+Para a interface gráfica, utilizamos a versão 3 da biblioteca GTK.
 
-Para compilar, gcc -o testeEstruturas testeEstruturas.c lista.h deque.h lista.c lista.h `pkg-config --cflags --libs check`
+Makefile para compilação:
+Para a compilação da aplicação utilizando a libgtk, usar comando "make gtkVigenere" e executar.
+Para a compilação da aplicação em versão terminal, usar comando "make virgenere" e executar.
+Para a compilação dos testes de estrutura usando a libcheck, usar comando "make testes" e executar.
+Para compilação completa, usar comando "make all".
 
 
