@@ -82,6 +82,7 @@ int main () {
 }
 
 void inicializar(listaEnc *texto, deque *chave,int modo) {
+    //funcao que obtem o texto a ser processado e a chave. Recebe as estruturas por ponteiros
     char proxLetra = 0;
     startList(texto);
     startDeque(chave,100);

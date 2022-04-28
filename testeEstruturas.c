@@ -224,7 +224,7 @@ Suite *criar_deque_suite() {
 /* testes da lista ordenada */
 START_TEST(insercaoOrdenada) {
     listaEncOrd listaOrdenadaTeste;
-    int (*funcaoOrdenacao)(int,int); //cria ponteiro de funcao para a ordencao da lista ordenada
+    int (*funcaoOrdenacao)(int,int); //cria ponteiro de funcao para a ordenacao da lista ordenada
     funcaoOrdenacao = compare;
     startListOrd(&listaOrdenadaTeste,funcaoOrdenacao);
     int vetorTeste[10000]; //vetor com valores de teste
@@ -239,7 +239,7 @@ START_TEST(insercaoOrdenada) {
     qsort(vetorTeste,10000,sizeof(int),compareQsort); //funcao para ordenar os valores randomicos obtidos no vetor
     iteradorOrd it;
     it = firstElementListOrd(&listaOrdenadaTeste);
-    for (i = 0; i < 10000; i++) { //co para o vetor ordenado com a lista e verifica se esta ordenado
+    for (i = 0; i < 10000; i++) { //compara o vetor ordenado com a lista e verifica se esta ordenado
         ck_assert_int_eq(getElementListOrd(it),vetorTeste[i]);
         nextElementListOrd(&it);
     }
