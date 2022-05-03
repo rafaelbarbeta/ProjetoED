@@ -9,3 +9,5 @@ Para compilacao completa, usar comando "make all".
 
 
 Para testar a cifra, utilize a ferramenta online : https://cryptii.com/pipes/vigenere-cipher
+
+Atenção: A cifra de vigenere utiliza o alfabeto para realizar a criptografia, logo a chave a ser fornecida precisa ser formada apenas letras
