@@ -1,7 +1,7 @@
 #include "lista.h"
 #include <stdlib.h>
 
-/* funções da lista sem iterador*/
+/* funcoes da lista sem iterador*/
 void startList (listaEnc *l) {
     l->qty = 0;
     l->sentinel = (struct node*) malloc(sizeof(struct node)); //constroi o node sentinela
@@ -22,20 +22,20 @@ int emptyList (listaEnc *l){
 void addStartList (listaEnc *l, type num) {
     struct node* newNode = malloc(sizeof(struct node));
     newNode->data = num; 
-    newNode->next = l->sentinel->next; //o próximo depois do novo no é o antigo next da sentinela
+    newNode->next = l->sentinel->next; //o proximo depois do novo no é o antigo next da sentinela
     newNode->prev = l->sentinel; //a anterior é a propria sentinela
-    l->sentinel->next->prev = newNode; //o prev do antigo primeiro (ou a sentinela) recebe o endereço do novo node
-    l->sentinel->next = newNode; //o next da sentinela aponta para o início da lista, no caso, o novo node
+    l->sentinel->next->prev = newNode; //o prev do antigo primeiro (ou a sentinela) recebe o endereco do novo node
+    l->sentinel->next = newNode; //o next da sentinela aponta para o inicio da lista, no caso, o novo node
     l->qty++;
 }
 
 void addEndList (listaEnc *l, type num) {
     struct node* newNode = malloc(sizeof(struct node));
     newNode->data = num;
-    newNode->next = l->sentinel; //o próximo depois do novo é a própria sentinela
-    newNode->prev = l->sentinel->prev; //o anterior antes do novo é o antigo prev da sentinela
-    l->sentinel->prev->next = newNode; //caso não seja o único, o next do antigo último apontara para o novo primeiro
-    l->sentinel->prev = newNode; //o prev da sentinela aponta para o último da lista, no caso, o novo node
+    newNode->next = l->sentinel; //o proximo depois do novo eh a própria sentinela
+    newNode->prev = l->sentinel->prev; //o anterior antes do novo eh o antigo prev da sentinela
+    l->sentinel->prev->next = newNode; //caso nao seja o unico, o next do antigo ultimo apontara para o novo primeiro
+    l->sentinel->prev = newNode; //o prev da sentinela aponta para o ultimo da lista, no caso, o novo node
     l->qty++;
 }
 
@@ -83,7 +83,7 @@ void wreckList (listaEnc *l) {
 /* funcoes da lista com iterador */
 void insertAfterList (listaEnc* l,iterador i, type data) {
     if (l != i.list) { //o iterador obrigatoriamente precisa ser da mesma lista que a lista apontada nos parametros
-        return;         //do contrario, a funcao não ira executar por seguranca
+        return;         //do contrario, a funcao nao ira executar por seguranca
     }
     struct node *newNode = malloc(sizeof(struct node));
     newNode->data = data;
@@ -94,7 +94,7 @@ void insertAfterList (listaEnc* l,iterador i, type data) {
 }
 
 void insertBeforeList (listaEnc* l,iterador i, type data) {
-    if (l != i.list) { //o iterador obrigatoriamente precisa ser da mesma lista que a lista apontada nos parâmetros
+    if (l != i.list) { //o iterador obrigatoriamente precisa ser da mesma lista que a lista apontada nos parametros
         return;         //do contrario, a funcao nao ira executar por seguranca
     }
     struct node *newNode = malloc(sizeof(struct node));
@@ -172,7 +172,7 @@ iterador searchFirstList(listaEnc* l , type data) {
 
 iterador searchAfterList(listaEnc* l,iterador i, type data) {
     l->sentinel->data = data; //coloca o valor a ser procurado na sentinela
-    while (getElementList(i)!= data) //avança searchIt de posição até achar o valor procurado
+    while (getElementList(i)!= data) //avança searchIt de posicao ate achar o valor procurado
         nextElementList(&i);          //a funcao termina pois em ultimo caso o valor esta na propria sentinela
     return i; //retorna o iterador apontando para o elemento procurado ou um iterador apontando para o fim se nao achar
 }

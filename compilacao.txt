@@ -1,11 +1,11 @@
 Utilizamos a biblioteca check para verificar o funcionamento das duas estruturas de dados.
-Para a interface gráfica, utilizamos a versão 3 da biblioteca GTK (libgtk-3-dev).
+Para a interface grafica, utilizamos a versao 3 da biblioteca GTK (libgtk-3-dev).
 
-Makefile para compilação:
-Para a compilação da aplicação utilizando a libgtk, usar comando "make gtkVigenere" e executar.
-Para a compilação da aplicação em versão terminal, usar comando "make vigenere" e executar.
-Para a compilação dos testes de estrutura usando a libcheck, usar comando "make testes" e executar.
-Para compilação completa, usar comando "make all".
+Makefile para compilacao:
+Para a compilacao da aplicacao utilizando a libgtk, usar comando "make gtkVigenere" e executar.
+Para a compilacao da aplicacao em versão terminal, usar comando "make vigenere" e executar.
+Para a compilacao dos testes de estrutura usando a libcheck, usar comando "make testes" e executar.
+Para compilacao completa, usar comando "make all".
 
 
 Para testar a cifra, utilize a ferramenta online : https://cryptii.com/pipes/vigenere-cipher

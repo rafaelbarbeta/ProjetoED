@@ -38,20 +38,20 @@ void sortedInsertOrd(listaEncOrd *l, typeOrd num); //adiciona um elemento de for
 void wreckListOrd (listaEncOrd *l); //destroi completamente a lista
 
 
-//funções que utilizam o iteradorOrd
-int removeElementListOrd(listaEncOrd* l,iteradorOrd *i); //remove um elemento apontado pelo iteradorOrd e avança o iteradorOrd uma posição
+//funcoes que utilizam o iteradorOrd
+int removeElementListOrd(listaEncOrd* l,iteradorOrd *i); //remove um elemento apontado pelo iteradorOrd e avanca o iteradorOrd uma posicao
 
 iteradorOrd firstElementListOrd(listaEncOrd* l); //retorna um iteradorOrd apontando para o primeiro elemento da lista
 iteradorOrd lastElementListOrd(listaEncOrd* l);  //retorna um iteradorOrd apontando para o ultimo elemento da lista
 
-typeOrd getElementListOrd(iteradorOrd i); //retorna o valor do elemento guardado na posição apontado pelo iteradorOrd
+typeOrd getElementListOrd(iteradorOrd i); //retorna o valor do elemento guardado na posicao apontado pelo iteradorOrd
 int nextElementListOrd(iteradorOrd* i); //avanca uma posicao na lista, deve ser passado o endereco do iteradorOrd
-int previousElementListOrd(iteradorOrd* i); //retorna uma posicao na lista, deve ser passado o endereço do iteradorOrd
+int previousElementListOrd(iteradorOrd* i); //retorna uma posicao na lista, deve ser passado o endereco do iteradorOrd
 int endListOrd(iteradorOrd i); //verifica se a lista acabou
 
-// funções de complexidade O(n)
+// funcoes de complexidade O(n)
 iteradorOrd searchFirstListOrd(listaEncOrd* l , typeOrd data); //procura um elemento apartir da primeira posicao da lista
 iteradorOrd searchAfterListOrd(listaEncOrd* l,iteradorOrd i, typeOrd data); //procura um elemento apartir da posicao apontada pelo iteradorOrd
 iteradorOrd searchPositionListOrd(listaEncOrd* l, unsigned int position); //retorna um iteradorOrd apontando para o elemento na posicao especificada "position"
-                                                                //0 é a posicao do primeiro elemento
+                                                                //0 eh a posicao do primeiro elemento
 #endif

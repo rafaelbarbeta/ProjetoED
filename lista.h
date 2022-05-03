@@ -19,7 +19,7 @@ typedef struct  {
     struct node *position;
 } iterador;
 
-// funções da lista encadeada
+// funcoes da lista encadeada
 void startList (listaEnc *l); //inicia a lista com o sentinela
 int emptyList (listaEnc *l); //se a lista esta vazia retorna 1, se nao 0
 void addStartList (listaEnc *l, type num); //insere elemento "num" no inicio da lista
@@ -33,7 +33,7 @@ type viewEndList (listaEnc *l); //retorna ultimo elemento da lista (data)
 void wreckList (listaEnc *l); //destroi completamente a lista
 
 
-//funções que utilizam o iterador
+//funcoes que utilizam o iterador
 void insertAfterList (listaEnc* l,iterador i, type data); //insere um elemento depois do elemento apontado pelo iterador
 void insertBeforeList (listaEnc* l,iterador i, type data); //insere um elemento antes do elemento apontado pelo iterador
 int removeElementList (listaEnc* l,iterador *i); //remove um elemento apontado pelo iterador e avança o iterador uma posição
@@ -41,14 +41,14 @@ int removeElementList (listaEnc* l,iterador *i); //remove um elemento apontado p
 iterador firstElementList(listaEnc* l); //retorna um iterador apontando para o primeiro elemento da lista
 iterador lastElementList(listaEnc* l);  //retorna um iterador apontando para o ultimo elemento da lista
 
-type getElementList(iterador i); //retorna o valor do elemento guardado na posição apontado pelo iterador
+type getElementList(iterador i); //retorna o valor do elemento guardado na posicao apontado pelo iterador
 int nextElementList(iterador* i); //avanca uma posicao na lista, deve ser passado o endereco do iterador
 int previousElementList(iterador* i); //retorna uma posicao na lista, deve ser passado o endereço do iterador
 int endList(iterador i); //verifica se a lista acabou
 
-// funções de complexidade O(n)
+// funcoes de complexidade O(n)
 iterador searchFirstList(listaEnc* l , type data); //procura um elemento apartir da primeira posicao da lista
 iterador searchAfterList(listaEnc* l,iterador i, type data); //procura um elemento apartir da posicao apontada pelo iterador
 iterador searchPositionList(listaEnc* l, unsigned int position); //retorna um iterador apontando para o elemento na posicao especificada "position"
-                                                                //0 é a posicao do primeiro elemento
+                                                                //0 eh a posicao do primeiro elemento
 #endif

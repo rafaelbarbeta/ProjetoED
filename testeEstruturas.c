@@ -10,7 +10,7 @@ START_TEST(testeAdicionarInicioLista) {
     listaEnc listaTeste;
     startList(&listaTeste);
     int i;
-    for (i = 0; i <= 50000; i++) { //adiciona vários elementos no inicio
+    for (i = 0; i <= 50000; i++) { //adiciona varios elementos no inicio
         addStartList(&listaTeste,i);
     }
     for (i = 50000; i >= 0; i--) {
@@ -25,7 +25,7 @@ START_TEST(testeAdicionarFimLista) {
     listaEnc listaTeste;
     startList(&listaTeste);
     int i;
-    for (i = 0; i <= 50000; i++) { //adiciona vários elementos no fim
+    for (i = 0; i <= 50000; i++) { //adiciona varios elementos no fim
         addEndList(&listaTeste,i);
     }
     for (i = 50000; i >= 0; i--) {
@@ -41,8 +41,8 @@ START_TEST(testeMisturadoInicioFimLista) {
     startList(&listaTeste);
     int i;
     for (i = 0; i <= 50000; i += 2) { 
-        addStartList(&listaTeste,i); //os pares estão no início de forma decrescente
-        addEndList(&listaTeste,i+1); //os impares estão no fim de forma crescente
+        addStartList(&listaTeste,i); //os pares estao no inicio de forma decrescente
+        addEndList(&listaTeste,i+1); //os impares estao no fim de forma crescente
     }
     for (i = 50000; i >= 0; i -= 2) {
         ck_assert_int_eq(viewStartList(&listaTeste),i);
@@ -60,14 +60,14 @@ START_TEST(testeViolacaoMemLista) {
     int inicio;
     srand(time(NULL));
     int i;
-    for (i = 0; i < 10000;i++) { //adiciona elementos randomicamente tentando ocasionar uma falha de segmentação
+    for (i = 0; i < 10000;i++) { //adiciona elementos randomicamente tentando ocasionar uma falha de segmentacao
         inicio = rand() % 2;
         if (inicio)
             addStartList(&listaTeste,i);
         else
             addEndList(&listaTeste,i);
     }
-    for (i = 0; i < 50000; i++) { //tenta remover mais elementos do que é possivel, a API deve se proteger disso
+    for (i = 0; i < 50000; i++) { //tenta remover mais elementos do que eh possivel, a API deve se proteger disso
         inicio = rand() % 2;
         if (inicio)
             removeStartList(&listaTeste);
@@ -124,7 +124,7 @@ START_TEST(insercaoInicioDeque) {
     deque dequeTeste;
     startDeque(&dequeTeste,10000);
     int i;
-    for (i = 1; i <= 10000; i++) { //adiciona vários elementos no inicio
+    for (i = 1; i <= 10000; i++) { //adiciona varios elementos no inicio
         addStartDeque(&dequeTeste,i);
     }
     for (i = 10000; i >= 1; i--) {
@@ -139,7 +139,7 @@ START_TEST(insercaoFinalDeque) {
     deque dequeTeste;
     startDeque(&dequeTeste,10000);  
     int i;
-    for (i = 1; i <= 10000; i++) { //adiciona vários elementos no inicio
+    for (i = 1; i <= 10000; i++) { //adiciona varios elementos no inicio
         addEndDeque(&dequeTeste,i);
     }
     for (i = 10000; i >= 1; i--) {
@@ -155,8 +155,8 @@ START_TEST(insercaoInicioFimDeque) {
     startDeque(&dequeTeste,100000);
     int i;
     for (i = 0; i <= 50000; i += 2) { 
-        addStartDeque(&dequeTeste,i); //os pares estão no início de forma decrescente
-        addEndDeque(&dequeTeste,i+1); //os impares estão no fim de forma crescente
+        addStartDeque(&dequeTeste,i); //os pares estao no início de forma decrescente
+        addEndDeque(&dequeTeste,i+1); //os impares estao no fim de forma crescente
     }
     for (i = 50000; i >= 0; i -= 2) {
         ck_assert_int_eq(viewStartDeque(&dequeTeste),i);
@@ -180,7 +180,7 @@ START_TEST(detecaoFullDeque) {
     ck_assert_int_eq(possivel,0); //error deve ser igual a 1, pois o deque esta cheio (mesmo adicionando no final)
     removeStartDeque(&dequeTeste);
     possivel = addEndDeque(&dequeTeste,9);
-    ck_assert_int_eq(possivel,1); //uma posição foi liberada, o deque deve ser capaz de adicionar elementos agora
+    ck_assert_int_eq(possivel,1); //uma posicao foi liberada, o deque deve ser capaz de adicionar elementos agora
     ck_assert_int_eq(viewEndDeque(&dequeTeste),9); //deve ter sido guardado o valor 9 no final do deque
     wreckDeque(&dequeTeste);
 }
@@ -193,8 +193,8 @@ START_TEST(insercaoRemocaoCircularDeque) {
     for (i = 0; i < 10; i++) { //deque contem os elementos : 0 5 10 15 20 25 30 35 40 45
         addEndDeque(&dequeTeste,(i*5));
     }
-    //coloca os elementos do início no final, verificando se o próximo elemento do inicio é o esperado
-    //ex, para i = 1, o valor do inicio deve ser 5 (5 10 15 20 25 30 35 40 45 0), já para i = 10, o valor deve ser 0
+    //coloca os elementos do início no final, verificando se o próximo elemento do inicio eh o esperado
+    //ex, para i = 1, o valor do inicio deve ser 5 (5 10 15 20 25 30 35 40 45 0), ja para i = 10, o valor deve ser 0
     //(0 5 10 15 20 25 30 35 40 45)
     for (i = 0; i < 10000; i++) { 
         int valInicio = viewStartDeque(&dequeTeste); 
@@ -230,7 +230,7 @@ START_TEST(insercaoOrdenada) {
     int vetorTeste[10000]; //vetor com valores de teste
     srand(time(NULL));
     int i;
-    for (i = 0; i < 10000; i++) { //adiciona números aleatorios na lista ordenada e no vetor
+    for (i = 0; i < 10000; i++) { //adiciona numeros aleatorios na lista ordenada e no vetor
         int random;
         random = rand() % 10000;
         vetorTeste[i] = random;

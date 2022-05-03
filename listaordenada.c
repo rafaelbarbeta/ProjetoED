@@ -56,9 +56,9 @@ void sortedInsertOrd(listaEncOrd *l, typeOrd num) {
     struct nodeOrd* newNode = malloc(sizeof(struct nodeOrd));
     newNode->data = num;
     if(emptyListOrd(l)) { // se a lista estiver vazia, apenas insere no inicio normalmente
-        newNode->next = l->sentinel->next; //o próximo depois do novo no é o antigo next da sentinela
-        newNode->prev = l->sentinel; //a anterior é a propria sentinela
-        l->sentinel->next->prev = newNode; //o prev do antigo primeiro (ou a sentinela) recebe o endereço do novo node
+        newNode->next = l->sentinel->next; //o proximo depois do novo no eh o antigo next da sentinela
+        newNode->prev = l->sentinel; //a anterior eh a propria sentinela
+        l->sentinel->next->prev = newNode; //o prev do antigo primeiro (ou a sentinela) recebe o endereco do novo node
         l->sentinel->next = newNode; //o next da sentinela aponta para o início da lista, no caso, o novo node
         l->qty++;
         return;
@@ -80,10 +80,10 @@ void sortedInsertOrd(listaEncOrd *l, typeOrd num) {
     }
     //caso "num" venha depois de todos os elementos da lista, entao deve ocorrer uma insercao no final
     //o loop for nao ira inseririr o elemento em nenhum momento se esse for o caso, que eh o pior em termos de complexidade
-    newNode->next = l->sentinel; //o próximo depois do novo é a própria sentinela
-    newNode->prev = l->sentinel->prev; //o anterior antes do novo é o antigo prev da sentinela
-    l->sentinel->prev->next = newNode; //caso não seja o único, o next do antigo último apontara para o novo primeiro
-    l->sentinel->prev = newNode; //o prev da sentinela aponta para o último da lista, no caso, o novo node
+    newNode->next = l->sentinel; //o proximo depois do novo eh a propria sentinela
+    newNode->prev = l->sentinel->prev; //o anterior antes do novo eh o antigo prev da sentinela
+    l->sentinel->prev->next = newNode; //caso não seja o unico, o next do antigo ultimo apontara para o novo primeiro
+    l->sentinel->prev = newNode; //o prev da sentinela aponta para o ultimo da lista, no caso, o novo node
     l->qty++;
     return;
 }
@@ -160,14 +160,14 @@ int endListOrd(iteradorOrd i){
 iteradorOrd searchFirstListOrd(listaEncOrd* l , typeOrd data) {
     l->sentinel->data = data; //coloca o valor a ser procurado na sentinela
     iteradorOrd searchIt = firstElementListOrd(l); //cria um iteradorOrd apontando para o inicio da lista
-    while (getElementListOrd(searchIt) != data) //avança de posicao até achar o valor procurado
-        nextElementListOrd(&searchIt);          //a funcao termina pois em ultimo caso o valor está na propria sentinela
+    while (getElementListOrd(searchIt) != data) //avança de posicao ate achar o valor procurado
+        nextElementListOrd(&searchIt);          //a funcao termina pois em ultimo caso o valor esta na propria sentinela
     return searchIt; //retorna o iteradorOrd apontando para o elemento procurado ou um iteradorOrd apontanto para o fim se nao achar 
 }
 
 iteradorOrd searchAfterListOrd(listaEncOrd* l,iteradorOrd i, typeOrd data) {
     l->sentinel->data = data; //coloca o valor a ser procurado na sentinela
-    while (getElementListOrd(i)!= data) //avança searchIt de posição até achar o valor procurado
+    while (getElementListOrd(i)!= data) //avança searchIt de posicao ate achar o valor procurado
         nextElementListOrd(&i);          //a funcao termina pois em ultimo caso o valor esta na propria sentinela
     return i; //retorna o iteradorOrd apontando para o elemento procurado ou um iteradorOrd apontando para o fim se nao achar
 }

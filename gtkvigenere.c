@@ -4,22 +4,22 @@
 #include "lista.h"
 #include "deque.h"
 
-typedef struct { //struct que irá conter os argumentos para callback dos botões (no caso, o ponteiro para o texto e a chave)
+typedef struct { //struct que ira conter os argumentos para callback dos botoes (no caso, o ponteiro para o texto e a chave)
   GtkTextBuffer *bufferTexto;
   GtkTextBuffer *bufferChave;
 } myArgs;
 
 char criptografarCaractere(char chartexto,char charchave) {
-    //a função de criptografia irá processar todos os caracteres como se fossem minúsculos, para facilidade de código
-    //por isso, é necessário guardar se o caractere no texto original era maiúsculo ou não
+    //a funcao de criptografia ira processar todos os caracteres como se fossem minusculos, para facilidade de codigo
+    //por isso, eh necessario guardar se o caractere no texto original era maiusculo ou nao
     int eraMaiusculo = 0;
     if (isupper(chartexto))
         eraMaiusculo = 1;
     chartexto = tolower(chartexto);
-    //sendo que a letra a tem valor ascii = 97, se subtrairmos 97 de todos os caracteres, eles ficam ordenados de 0 até 25, o que facilita a criptografia
+    //sendo que a letra a tem valor ascii = 97, se subtrairmos 97 de todos os caracteres, eles ficam ordenados de 0 ate 25, o que facilita a criptografia
     chartexto = chartexto - 97;
     charchave = tolower(charchave) - 97;
-    int charcrip = (chartexto + charchave) % 26; //definição matemática da cifra de vigenère
+    int charcrip = (chartexto + charchave) % 26; //definicao matematica da cifra de vigenere
     charcrip = charcrip + 97; //soma-se 97 novamante para que o caractere volte a ser codificavel em ASCII
     if (eraMaiusculo)
         charcrip = toupper(charcrip);
@@ -27,16 +27,16 @@ char criptografarCaractere(char chartexto,char charchave) {
 }
 
 char descriptografarCaractere(char chartexto,char charchave) {
-    //a função para descriptografar irá processar todos os caracteres como se fossem minúsculos, para facilidade de código
-    //por isso, é necessário guardar se o caractere no texto original era maiúsculo ou não
+    //a funcao para descriptografar ira processar todos os caracteres como se fossem minusculos, para facilidade de codigo
+    //por isso, eh necessario guardar se o caractere no texto original era maiusculo ou não
     int eraMaiusculo = 0;
     if (isupper(chartexto))
         eraMaiusculo = 1;
     chartexto = tolower(chartexto);
-    //sendo que a letra a tem valor ascii = 97, se subtrairmos 97 de todos os caracteres, eles ficam ordenados de 0 até 25, o que facilita para descriptografar
+    //sendo que a letra a tem valor ascii = 97, se subtrairmos 97 de todos os caracteres, eles ficam ordenados de 0 ate 25, o que facilita para descriptografar
     chartexto = chartexto - 97;
     charchave = tolower(charchave) - 97;
-    int chardecrip = (chartexto - charchave + 26) % 26; //definição matemática da cifra de vigenère
+    int chardecrip = (chartexto - charchave + 26) % 26; //definicao matematica da cifra de vigenere
     chardecrip = chardecrip + 97; //soma-se 97 novamante para que o caractere volte a ser codificavel em ASCII
     if (eraMaiusculo)
         chardecrip = toupper(chardecrip);
@@ -183,7 +183,7 @@ activate (GtkApplication* app, gpointer user_data) {
   gtk_window_set_default_size (GTK_WINDOW (window), 300, 600);
   gtk_window_set_position(GTK_WINDOW(window),GTK_WIN_POS_CENTER);
 
-  //rótulo "Insira o texto para Criptografar/Descriptografar" com cor vede 
+  //rotulo "Insira o texto para Criptografar/Descriptografar" com cor vede 
   labelTexto = gtk_label_new(NULL);
   gtk_label_set_markup(GTK_LABEL(labelTexto),"<span foreground='green' font_family='Times New Roman' weight='bold'>Insira o texto para Criptografar/Descriptografar</span>");
 
@@ -199,25 +199,25 @@ activate (GtkApplication* app, gpointer user_data) {
   chave = gtk_text_view_new();
   bufferChave = gtk_text_view_get_buffer(GTK_TEXT_VIEW(chave));
 
-  //argumentos para as funções chamadas pelos botões
+  //argumentos para as funcoes chamadas pelos botoes
   myArgs *args;
   args = g_new(myArgs,1);
   args->bufferTexto = bufferTexto;
   args->bufferChave = bufferChave;
 
 
-  //cria dois botões, um para criptografar utilizando a chave, outra para descriptografar
+  //cria dois botoes, um para criptografar utilizando a chave, outra para descriptografar
   buttonCrip = gtk_button_new_with_label("Criptografar!");
   buttonDecrip = gtk_button_new_with_label("Descriptografar!");
   boxButton = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start(GTK_BOX(boxButton),buttonCrip,TRUE,TRUE,10);
   gtk_box_pack_start(GTK_BOX(boxButton),buttonDecrip,TRUE,TRUE,10);
-  //define a função que deve ser chamada quando um dos botões é clicado. Passa a struct "args" como parâmetro
+  //define a funcao que deve ser chamada quando um dos botoes eh clicado. Passa a struct "args" como parametro
   g_signal_connect(GTK_BUTTON(buttonCrip),"clicked",G_CALLBACK(criptografar),args);
   g_signal_connect(GTK_BUTTON(buttonDecrip),"clicked",G_CALLBACK(descriptografar),args);
 
 
-  //Cria uma "caixa" para conter as widgets. Define a orientação como vertical
+  //Cria uma "caixa" para conter as widgets. Define a orientacao como vertical
   principalBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add(GTK_CONTAINER(window),principalBox);
   gtk_box_pack_start(GTK_BOX(principalBox),labelTexto,FALSE,FALSE,10);

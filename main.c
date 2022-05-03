@@ -105,16 +105,16 @@ void inicializar(listaEnc *texto, deque *chave,int modo) {
 }
 
 char criptografarCaractere(char chartexto,char charchave) {
-    //a função de criptografia irá processar todos os caracteres como se fossem minúsculos, para facilidade de código
-    //por isso, é necessário guardar se o caractere no texto original era maiúsculo ou não
+    //a funcao de criptografia ira processar todos os caracteres como se fossem minusculos, para facilidade de codigo
+    //por isso, eh necessario guardar se o caractere no texto original era maiusculo ou nao
     int eraMaiusculo = 0;
     if (isupper(chartexto))
         eraMaiusculo = 1;
     chartexto = tolower(chartexto);
-    //sendo que a letra a tem valor ascii = 97, se subtrairmos 97 de todos os caracteres, eles ficam ordenados de 0 até 25, o que facilita a criptografia
+    //sendo que a letra a tem valor ascii = 97, se subtrairmos 97 de todos os caracteres, eles ficam ordenados de 0 ate 25, o que facilita a criptografia
     chartexto = chartexto - 97;
     charchave = tolower(charchave) - 97;
-    int charcrip = (chartexto + charchave) % 26; //definição matemática da cifra de vigenère
+    int charcrip = (chartexto + charchave) % 26; //definicao matematica da cifra de vigenere
     charcrip = charcrip + 97; //soma-se 97 novamante para que o caractere volte a ser codificavel em ASCII
     if (eraMaiusculo)
         charcrip = toupper(charcrip);
@@ -122,16 +122,16 @@ char criptografarCaractere(char chartexto,char charchave) {
 }
 
 char descriptografarCaractere(char chartexto,char charchave) {
-    //a função para descriptografar irá processar todos os caracteres como se fossem minúsculos, para facilidade de código
-    //por isso, é necessário guardar se o caractere no texto original era maiúsculo ou não
+    //a funcao para descriptografar ira processar todos os caracteres como se fossem minusculos, para facilidade de codigo
+    //por isso, eh necessário guardar se o caractere no texto original era maiúsculo ou nao
     int eraMaiusculo = 0;
     if (isupper(chartexto))
         eraMaiusculo = 1;
     chartexto = tolower(chartexto);
-    //sendo que a letra a tem valor ascii = 97, se subtrairmos 97 de todos os caracteres, eles ficam ordenados de 0 até 25, o que facilita para descriptografar
+    //sendo que a letra a tem valor ascii = 97, se subtrairmos 97 de todos os caracteres, eles ficam ordenados de 0 ate 25, o que facilita para descriptografar
     chartexto = chartexto - 97;
     charchave = tolower(charchave) - 97;
-    int chardecrip = (chartexto - charchave + 26) % 26; //definição matemática da cifra de vigenère
+    int chardecrip = (chartexto - charchave + 26) % 26; //definicao matematica da cifra de vigenere
     chardecrip = chardecrip + 97; //soma-se 97 novamante para que o caractere volte a ser codificavel em ASCII
     if (eraMaiusculo)
         chardecrip = toupper(chardecrip);
