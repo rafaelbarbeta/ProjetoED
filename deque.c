@@ -51,13 +51,15 @@ int addEndDeque (deque *d, type num) {
 type viewStartDeque (deque *d) {
     //copia-se o valor da head na variavel indexTemp, retrocede esse indexTemp em uma posicao e
     //o resultado eh o inicio do deque. A head permanece inalterada depois dessa alteracao
-    unsigned int indexTemp = d->head; 
-    nextDeque(d,&indexTemp,-1);
-    return d->vect[indexTemp];
+    //para garantir o retorno correto o deque nao deve ser vazio (usuario)
+        unsigned int indexTemp = d->head; 
+        nextDeque(d,&indexTemp,-1);
+        return d->vect[indexTemp];
 }
 
 type viewEndDeque (deque *d) {
-    return d->vect[d->tail]; // a tail ja aponta para o ultimo valor, e não para o proximo local disponivel
+    //para garantir o retorno correto o deque nao deve ser vazio (usuario)
+    return d->vect[d->tail]; // a tail ja aponta para o ultimo valor, e não para o proximo local disponivel   
 }
 
 void wreckDeque (deque *d) {

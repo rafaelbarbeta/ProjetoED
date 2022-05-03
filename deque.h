@@ -18,8 +18,8 @@ int addStartDeque (deque *d, type num); //insere um elemento "num" passado nos p
 int addEndDeque (deque *d, type num); //insere um elemento "num" passado nos parametros no fim do deque. retorna 1 se isso foi possivel
 int removeStartDeque (deque *d); //remove um elemento no inicio do deque. retorna 1 se isso foi possivel
 int removeEndDeque (deque *d); //remove um elemento no final do deque. retorna 1 se isso foi possivel
-type viewStartDeque (deque *d); //retorna um elemento no inicio do deque. Tem comportamento indefinido se o deque estiver vazio
-type viewEndDeque (deque *d);  //retorna um elemento no final do deque. Tem comportamento indefinido se o deque estiver vazio
+type viewStartDeque (deque *d); //retorna o elemento do inicio do deque. Para o usuario garantir o retorno correto, o deque deve ter ao menos um elemento, ou seja, tem comportamento indefinido se o deque estiver vazio 
+type viewEndDeque (deque *d);  //retorna o elemento do final do deque. Para o usuario garantir o retorno correto, o deque deve ter ao menos um elemento, ou seja, tem comportamento indefinido se o deque estiver vazio 
 void wreckDeque (deque *d); //destroi o deque. 
 
 #endif
