@@ -68,15 +68,25 @@ unsigned int sizeList (listaEnc *l) {
 }
 
 type viewStartList (listaEnc *l) {
+    //viewStartList nao pode ser chamado pelo usuario se a lista estiver vazia
+    //de qualquer forma, eh retornado o valor 0 para nao causar erro na compilacao
+    //embora esse valor nao possa ser utilizado para verificar o funcionamento da funcao
+    //(0 pode ser um elemento legitimo da lista)
     if(!emptyList(l)){ //se a lista nao esta vazia
         return (l->sentinel->next->data); //retorna data do posterior ao sentinela
     }
+    return 0;
 }
 
 type viewEndList (listaEnc *l) {
+    //viewStartList nao pode ser chamado pelo usuario se a lista estiver vazia
+    //de qualquer forma, eh retornado o valor 0 para nao causar erro na compilacao
+    //embora esse valor nao possa ser utilizado para verificar o funcionamento da funcao
+    //(0 pode ser um elemento legitimo da lista)
     if(!emptyList(l)){//se a lista nao esta vazia
         return (l->sentinel->prev->data); //retorna data do anterior ao sentinela
     }
+    return 0;
 }
 
 //operacao de complexidade O(n)
@@ -202,4 +212,3 @@ iterador searchPositionList(listaEnc* l, unsigned int position) {
         return i; //retorna o iterador apontando para o elemento desejado
     }
 }
-
